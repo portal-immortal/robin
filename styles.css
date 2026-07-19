@@ -32,14 +32,16 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 /* Main landing container */
 .landing-page {
   position: relative;
-  width: min(1024px, 100%);
-  padding: 2rem;
+  width: 100%;
+  max-width: 1024px;
+  padding: 1.25rem;
+  margin: 0 auto;
 }
 
 .card-surface {
@@ -95,7 +97,7 @@ body {
 /* Content layout */
 .hero-content {
   position: relative;
-  padding: 4rem 3rem 3rem;
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 4vw, 3rem) 3rem;
   display: grid;
   place-items: center;
   gap: 1.5rem;
@@ -103,8 +105,8 @@ body {
 
 .logo-hero {
   position: relative;
-  width: min(280px, 90vw);
-  height: min(280px, 90vw);
+  width: min(260px, 70vw);
+  height: min(260px, 70vw);
   display: grid;
   place-items: center;
   margin: 0 auto;
@@ -256,6 +258,89 @@ body {
 .mosque-shape {
   width: min(230px, 80vw);
   height: auto;
+}
+
+.footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 800px) {
+  .hero-content {
+    padding: 2rem 1.25rem 2rem;
+    gap: 1.25rem;
+  }
+
+  .title-group {
+    max-width: 100%;
+  }
+
+  .title-group p {
+    max-width: 100%;
+    font-size: clamp(0.95rem, 2.2vw, 1rem);
+  }
+
+  .loading-panel {
+    padding: 1.5rem;
+  }
+
+  .loading-status {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .loading-status .status-text,
+  .loading-status .loading-dots {
+    width: 100%;
+  }
+
+  .shape-circle,
+  .shape-square,
+  .shape-lines,
+  .shape-dot {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 0.75rem;
+  }
+
+  .landing-page {
+    padding: 0.9rem;
+  }
+
+  .hero-content {
+    padding: 1.5rem 1rem 1.5rem;
+  }
+
+  .logo-hero {
+    width: 180px;
+    height: 180px;
+  }
+
+  .shape-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .shape-square {
+    width: 70px;
+    height: 70px;
+  }
+
+  .shape-lines {
+    width: 90px;
+    height: 90px;
+  }
+
+  .shape-dot {
+    width: 10px;
+    height: 10px;
+  }
 }
 
 .footer {
