@@ -17,39 +17,71 @@
       justify-content: center;
       background-color: #ffffff;
       overflow: hidden;
+      font-family: Inter, system-ui, sans-serif;
+      color: #1f2937;
     }
     .loader {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.5rem;
-      padding: 1rem;
+      gap: 1rem;
       width: 100%;
-      max-width: 900px;
+      padding: 1rem;
       box-sizing: border-box;
+      text-align: center;
     }
-    .loader img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-    .spinner {
-      width: min(140px, 25vw);
-      max-height: 140px;
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      max-width: 920px;
     }
     .main-image {
       width: auto;
       max-width: 90vw;
-      max-height: 65vh;
+      max-height: 70vh;
       object-fit: contain;
+      border-radius: 22px;
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+    }
+    .title {
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      margin: 0;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0;
+      font-size: 1rem;
+      color: #4b5563;
+      max-width: 36rem;
+    }
+    .spinner {
+      width: 72px;
+      height: 72px;
+      border: 8px solid rgba(59, 130, 246, 0.18);
+      border-top-color: #3b82f6;
+      border-radius: 9999px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
 <body>
   <div class="loader">
-    <img class="spinner" src="loading.gif" alt="Animated loading spinner" />
-    <img class="main-image" src="loading under construction.png" alt="Loading under construction" />
+    <div class="content">
+      <img class="main-image" src="loading under construction.png" alt="Loading under construction" />
+      <div class="spinner" aria-hidden="true"></div>
+      <h1 class="title">Website sedang dipersiapkan</h1>
+      <p class="subtitle">Mohon bersabar, kami sedang menyiapkan tampilan terbaik untuk Anda.</p>
+    </div>
   </div>
 </body>
 </html>
