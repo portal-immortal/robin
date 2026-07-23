@@ -1,0 +1,115 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import Card from '@/components/Card.astro';
+import Button from '@/components/Button.astro';
+import { PPDB_STEPS, PPDB_REQUIREMENTS, FAQ_PPDB } from '@/utils/data';
+import { SITE } from '@/utils/site';
+
+// TODO before launch: point this at the panitia's live registration form
+// (Google Form / SIM PPDB) — kept as a clearly-marked placeholder since
+// this is a static site with no backend to process submissions directly.
+const REGISTRATION_FORM_URL = 'https://forms.gle/ppdb-roudhotuttholibin-placeholder';
+
+const waHref = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
+  'Assalamu\u2019alaikum, saya ingin bertanya tentang PPDB Pondok Pesantren Roudhotuttholibin.',
+)}`;
+---
+
+<BaseLayout
+  title="PPDB — Penerimaan Santri Baru"
+  description="Alur pendaftaran, persyaratan berkas, dan jadwal seleksi Penerimaan Peserta Didik Baru (PPDB) Pondok Pesantren Roudhotuttholibin."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'PPDB' }]} />
+      <SectionTitle
+        eyebrow="PPDB Tahun Ajaran 2026/2027"
+        title="Alur Pendaftaran Santri Baru"
+        description="Enam langkah mudah untuk bergabung menjadi bagian dari keluarga besar Roudhotuttholibin, jenjang MTs dan MA, program reguler maupun tahfizh."
+        align="left"
+      />
+      <div class="flex flex-wrap gap-4 pt-2">
+        <Button href={REGISTRATION_FORM_URL} size="lg">
+          Daftar Sekarang
+          <Icon name="ph:arrow-square-out" class="h-4 w-4" aria-hidden="true" />
+        </Button>
+        <Button href={waHref} variant="outline" size="lg">
+          <Icon name="ph:whatsapp-logo-fill" class="h-4 w-4" aria-hidden="true" />
+          Tanya via WhatsApp
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          PPDB_STEPS.map((step, i) => (
+            <Card as="article" class="flex flex-col gap-3">
+              <span class="bg-gradient-emerald shadow-soft flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white">
+                {i + 1}
+              </span>
+              <h3 class="text-ink dark:text-primary-50 text-base font-semibold">{step.title}</h3>
+              <p class="text-ink/70 dark:text-primary-100/70 text-sm leading-relaxed">
+                {step.description}
+              </p>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="geo-divider"></div>
+
+  <section class="section-pad dark:bg-primary-900/40 bg-white">
+    <div class="container-page grid gap-12 lg:grid-cols-2 lg:items-start">
+      <div class="flex flex-col gap-6">
+        <SectionTitle eyebrow="Persyaratan" title="Berkas yang Perlu Disiapkan" align="left" />
+        <ul class="flex flex-col gap-3">
+          {
+            PPDB_REQUIREMENTS.map((req) => (
+              <li class="rounded-xl2 border-primary-100 bg-surface dark:border-primary-800 dark:bg-primary-950 flex items-start gap-3 border p-4">
+                <Icon
+                  name="ph:check-circle-fill"
+                  class="text-primary-600 dark:text-primary-300 mt-0.5 h-5 w-5 shrink-0"
+                  aria-hidden="true"
+                />
+                <span class="text-ink/80 dark:text-primary-100/80 text-sm leading-relaxed">
+                  {req}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-6">
+        <SectionTitle eyebrow="FAQ" title="Pertanyaan yang Sering Diajukan" align="left" />
+        <div class="flex flex-col gap-3">
+          {
+            FAQ_PPDB.map((item) => (
+              <details class="group rounded-xl2 border-primary-100 bg-surface open:shadow-soft dark:border-primary-800 dark:bg-primary-950 border p-4">
+                <summary class="text-ink dark:text-primary-50 flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold">
+                  {item.q}
+                  <Icon
+                    name="ph:caret-down-bold"
+                    class="text-primary-600 dark:text-primary-300 h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180"
+                    aria-hidden="true"
+                  />
+                </summary>
+                <p class="text-ink/70 dark:text-primary-100/70 mt-3 text-sm leading-relaxed">
+                  {item.a}
+                </p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

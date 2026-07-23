@@ -1,0 +1,409 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import FeatureCard from '@/components/FeatureCard.astro';
+import AchievementCard from '@/components/AchievementCard.astro';
+import NewsCard from '@/components/NewsCard.astro';
+import GalleryGrid from '@/components/GalleryGrid.astro';
+import StatCounter from '@/components/StatCounter.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import Button from '@/components/Button.astro';
+import { SITE } from '@/utils/site';
+import { PROGRAMS, FACILITIES, ACHIEVEMENTS, STATS, GALLERY_CAPTIONS } from '@/utils/data';
+
+import heroImage from '@/assets/images/gallery/bangunan-pesantren-02.jpg';
+import aboutImage from '@/assets/images/gallery/suasana-mengajar-01.jpg';
+import flyerAgendaImage from '@/assets/images/flyers/flyer-agenda-rutin-pesantren.jpg';
+import flyerPenerimaanImage from '@/assets/images/flyers/flyer-penerimaan-santri.jpg';
+import galleryBangunan from '@/assets/images/gallery/bangunan-pesantren-02.jpg';
+import galleryKegiatan1 from '@/assets/images/gallery/kegiatan-santri-01.jpg';
+import galleryKegiatan2 from '@/assets/images/gallery/kegiatan-santri-02.jpg';
+import galleryKegiatan3 from '@/assets/images/gallery/kegiatan-santri-03.jpg';
+import galleryKegiatan4 from '@/assets/images/gallery/kegiatan-santri-04.jpg';
+import galleryKegiatan5 from '@/assets/images/gallery/kegiatan-santri-05.jpg';
+import galleryKegiatan6 from '@/assets/images/gallery/kegiatan-santri-06.jpg';
+import galleryKegiatan7 from '@/assets/images/gallery/kegiatan-santri-07.jpg';
+import galleryKegiatan8 from '@/assets/images/gallery/kegiatan-santri-08.jpg';
+import galleryMengajar1 from '@/assets/images/gallery/suasana-mengajar-02.jpg';
+import galleryMengajar2 from '@/assets/images/gallery/suasana-mengajar-01.jpg';
+import videoPosterOne from '@/assets/images/gallery/kegiatan-santri-02.jpg';
+import videoPosterTwo from '@/assets/images/gallery/kegiatan-santri-03.jpg';
+import videoPosterThree from '@/assets/images/gallery/suasana-mengajar-02.jpg';
+
+const galleryItems = [
+  { image: galleryBangunan, alt: 'Bangunan pesantren', caption: GALLERY_CAPTIONS[0] },
+  { image: galleryKegiatan1, alt: 'Kegiatan santri', caption: GALLERY_CAPTIONS[1] },
+  { image: galleryKegiatan2, alt: 'Kegiatan tahfizh', caption: GALLERY_CAPTIONS[2] },
+  { image: galleryKegiatan3, alt: 'Aktivitas santri', caption: GALLERY_CAPTIONS[3] },
+  { image: galleryKegiatan4, alt: 'Kegiatan pembelajaran', caption: GALLERY_CAPTIONS[4] },
+  { image: galleryKegiatan5, alt: 'Suasana belajar', caption: GALLERY_CAPTIONS[5] },
+  { image: galleryKegiatan6, alt: 'Kegiatan bersama', caption: GALLERY_CAPTIONS[6] },
+  { image: galleryKegiatan7, alt: 'Kegiatan keislaman', caption: GALLERY_CAPTIONS[7] },
+  { image: galleryKegiatan8, alt: 'Kegiatan santri', caption: GALLERY_CAPTIONS[8] },
+  { image: galleryMengajar1, alt: 'Suasana mengajar', caption: GALLERY_CAPTIONS[9] },
+  { image: galleryMengajar2, alt: 'Proses pembelajaran', caption: GALLERY_CAPTIONS[10] },
+  { image: galleryBangunan, alt: 'Masjid dan lingkungan pesantren', caption: GALLERY_CAPTIONS[11] },
+].slice(0, 8);
+
+const allNews = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const latestNews = allNews.slice(0, 3);
+const featuredAchievements = ACHIEVEMENTS.slice(0, 3);
+---
+
+<BaseLayout title={SITE.name} description={SITE.description}>
+  <Hero image={heroImage} />
+
+  <!-- ABOUT -->
+  <section id="tentang" class="section-pad" aria-labelledby="about-heading">
+    <div class="container-page grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+      <div class="relative">
+        <div class="rounded-xl3 shadow-card overflow-hidden">
+          <Image
+            src={aboutImage}
+            alt="Suasana pembelajaran di lingkungan pesantren"
+            width={640}
+            height={520}
+            class="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+        <div
+          class="bg-secondary-100 absolute -top-4 -right-4 hidden h-24 w-24 rotate-12 rounded-2xl sm:block"
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+      <div class="flex flex-col gap-6">
+        <SectionTitle
+          eyebrow="Tentang Kami"
+          title="Mengenal Roudlotut Tholibin"
+          align="left"
+        />
+        <p class="text-ink/70 dark:text-primary-100/70 text-base leading-relaxed">
+          Berlokasi di Gintung, Kecamatan Sukadiri, Kabupaten Tangerang, Pondok Pesantren Salafiyah
+          Roudlotut Tholibin hadir sebagai lembaga pendidikan Islam yang mengedepankan pendidikan
+          berbasis kitab kuning, pembentukan karakter islami, serta penguatan amaliah sehari-hari.
+          Dengan tetap menjaga nilai-nilai pesantren salaf, para santri dibimbing untuk memahami
+          ilmu agama secara mendalam, mengamalkannya dalam kehidupan, serta menjadi pribadi yang
+          bermanfaat bagi umat.
+        </p>
+        <ul class="grid gap-3 sm:grid-cols-2">
+          {
+            [
+              'Kurikulum Salafiyah',
+              'Pembinaan Akhlak',
+              'Pembiasaan Ibadah',
+              'Lingkungan Islami',
+            ].map((point) => (
+              <li class="text-ink/80 dark:text-primary-100/80 flex items-center gap-2.5 text-sm font-medium">
+                <Icon
+                  name="ph:check-circle-fill"
+                  class="text-primary-600 dark:text-primary-300 h-5 w-5 shrink-0"
+                  aria-hidden="true"
+                />
+                {point}
+              </li>
+            ))
+          }
+        </ul>
+        <div>
+          <Button href="/tentang" variant="outline">Selengkapnya Tentang Kami</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="geo-divider"></div>
+
+  <!-- PROGRAMS -->
+  <section id="program" class="section-pad" aria-labelledby="programs-heading">
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle
+        eyebrow="Program Pendidikan"
+        title="Kurikulum Salafiyah yang Menjaga Tradisi Keilmuan"
+        description="Program pendidikan meliputi kajian kitab kuning, nahwu & sharaf, fiqih, tauhid, tafsir, hadits, tasawuf, akhlak, bahasa Arab, tahsin Al-Qur’an, muhafadzah, sorogan, bandongan, dan musyawarah kitab."
+      />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          PROGRAMS.map((p) => (
+            <FeatureCard
+              icon={p.icon}
+              title={p.title}
+              description={p.description}
+              href="/program"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- FACILITIES -->
+  <section
+    id="fasilitas"
+    class="section-pad dark:bg-primary-900/40 bg-white"
+    aria-labelledby="facilities-heading"
+  >
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle
+        eyebrow="Kehidupan Santri"
+        title="Kehidupan di Pesantren Dibangun atas Kebersamaan dan Kedisiplinan"
+        description="Aktivitas harian meliputi shalat berjamaah, pengajian kitab kuning, halaqah Al-Qur’an, dzikir, wirid, muhadlarah, gotong royong, khidmah, dan belajar mandiri."
+      />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          FACILITIES.slice(0, 8).map((f) => (
+            <FeatureCard icon={f.icon} title={f.title} description={f.description} />
+          ))
+        }
+      </div>
+      <div class="text-center">
+        <Button href="/fasilitas" variant="outline">Lihat Semua Fasilitas</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY PREVIEW -->
+  <section id="galeri" class="section-pad" aria-labelledby="gallery-heading">
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle
+        eyebrow="Galeri"
+        title="Momen Kegiatan Santri"
+        description="Sekilas suasana belajar dan berkegiatan di lingkungan pesantren."
+      />
+      <GalleryGrid items={galleryItems} />
+      <div class="text-center">
+        <Button href="/galeri" variant="outline">Lihat Galeri Lengkap</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad dark:bg-primary-900/40 bg-white" aria-labelledby="announcements-heading">
+    <div class="container-page flex flex-col gap-10">
+      <SectionTitle
+        eyebrow="Informasi & Pengumuman"
+        title="Agenda Rutin dan Penerimaan Santri"
+        description="Informasi terbaru seputar kegiatan pesantren dan pendaftaran santri baru."
+      />
+      <div class="grid gap-6 lg:grid-cols-2">
+        <div class="rounded-xl3 border-primary-100 shadow-soft overflow-hidden border bg-white">
+          <Image
+            src={flyerAgendaImage}
+            alt="Flyer agenda rutin pesantren"
+            width={840}
+            height={1188}
+            class="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+        <div class="rounded-xl3 border-primary-100 shadow-soft overflow-hidden border bg-white">
+          <Image
+            src={flyerPenerimaanImage}
+            alt="Flyer penerimaan santri baru"
+            width={840}
+            height={1188}
+            class="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad" aria-labelledby="video-heading">
+    <div class="container-page flex flex-col gap-10">
+      <SectionTitle
+        eyebrow="Video"
+        title="Video Kegiatan Santri"
+        description="Tinjau aktivitas harian, kajian, dan suasana pesantren dalam format video singkat."
+      />
+      <div class="grid gap-6 lg:grid-cols-3">
+        <article class="rounded-xl3 border-primary-100 shadow-soft overflow-hidden border bg-white">
+          <div class="aspect-video overflow-hidden bg-primary-50">
+            <video
+              class="h-full w-full object-cover"
+              controls
+              preload="metadata"
+              playsinline
+              poster={videoPosterOne.src}
+            >
+              <source src="/videos/video-kegiatan-santri-01.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="p-5">
+            <h3 class="text-ink dark:text-primary-50 text-base font-semibold">Kegiatan Santri</h3>
+            <p class="text-ink/70 dark:text-primary-100/70 mt-2 text-sm leading-relaxed">
+              Suasana kegiatan harian santri yang penuh kedisiplinan dan kebersamaan.
+            </p>
+          </div>
+        </article>
+        <article class="rounded-xl3 border-primary-100 shadow-soft overflow-hidden border bg-white">
+          <div class="aspect-video overflow-hidden bg-primary-50">
+            <video
+              class="h-full w-full object-cover"
+              controls
+              preload="metadata"
+              playsinline
+              poster={videoPosterTwo.src}
+            >
+              <source src="/videos/video-kegiatan-santri-02.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="p-5">
+            <h3 class="text-ink dark:text-primary-50 text-base font-semibold">Kajian dan Ibadah</h3>
+            <p class="text-ink/70 dark:text-primary-100/70 mt-2 text-sm leading-relaxed">
+              Dokumentasi aktivitas ibadah, kajian, dan pembinaan akhlak santri.
+            </p>
+          </div>
+        </article>
+        <article class="rounded-xl3 border-primary-100 shadow-soft overflow-hidden border bg-white">
+          <div class="aspect-video overflow-hidden bg-primary-50">
+            <video
+              class="h-full w-full object-cover"
+              controls
+              preload="metadata"
+              playsinline
+              poster={videoPosterThree.src}
+            >
+              <source src="/videos/video-kegiatan-santri-03.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="p-5">
+            <h3 class="text-ink dark:text-primary-50 text-base font-semibold">Suasana Mengajar</h3>
+            <p class="text-ink/70 dark:text-primary-100/70 mt-2 text-sm leading-relaxed">
+              Kegiatan pembelajaran di kelas dan lingkungan pesantren yang tenang dan kondusif.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="geo-divider"></div>
+
+  <!-- LATEST NEWS -->
+  <section
+    id="berita"
+    class="section-pad dark:bg-primary-900/40 bg-white"
+    aria-labelledby="news-heading"
+  >
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle
+        eyebrow="Berita Terbaru"
+        title="Kabar dan Kegiatan Pesantren"
+        description="Ikuti perkembangan dan agenda terbaru dari lingkungan pesantren."
+      />
+      <div class="flex flex-wrap justify-center gap-6">
+        {
+          latestNews.map((post) => (
+            <NewsCard
+              title={post.data.title}
+              excerpt={post.data.excerpt}
+              date={post.data.date.toISOString()}
+              category={post.data.category}
+              image={post.data.image}
+              href={`/berita/${post.id}`}
+              class="w-full max-w-[360px]"
+            />
+          ))
+        }
+      </div>
+      <div class="text-center">
+        <Button href="/berita" variant="outline">Lihat Semua Berita</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="prestasi" class="section-pad" aria-labelledby="achievements-heading">
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle
+        eyebrow="Nilai-Nilai Pesantren"
+        title="Empat Pilar Utama Pendidikan"
+        description="Ilmu, adab, ibadah, dan pengabdian menjadi fondasi utama dalam membentuk santri yang berakhlak dan bermanfaat."
+      />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {featuredAchievements.map((a) => <AchievementCard {...a} />)}
+      </div>
+      <div class="text-center">
+        <Button href="/prestasi" variant="outline">Lihat Semua Prestasi</Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT + MAP -->
+  <section
+    id="kontak"
+    class="section-pad dark:bg-primary-900/40 bg-white"
+    aria-labelledby="contact-heading"
+  >
+    <div class="container-page grid gap-12 lg:grid-cols-2 lg:items-start">
+      <div class="flex flex-col gap-6">
+        <SectionTitle eyebrow="Kontak Kami" title="Hubungi Pesantren" align="left" />
+        <ul class="flex flex-col gap-4">
+          <li class="flex items-start gap-3">
+            <span
+              class="bg-primary-50 text-primary-600 dark:bg-primary-800 dark:text-primary-200 flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+            >
+              <Icon name="ph:map-pin" class="h-5 w-5" aria-hidden="true" />
+            </span>
+            <p class="text-ink/70 dark:text-primary-100/70 pt-2 text-sm">{SITE.address}</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="bg-primary-50 text-primary-600 dark:bg-primary-800 dark:text-primary-200 flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+            >
+              <Icon name="ph:phone" class="h-5 w-5" aria-hidden="true" />
+            </span>
+            <a
+              href={`tel:${SITE.phone.replace(/\s|-/g, '')}`}
+              class="text-ink/70 hover:text-primary-600 dark:text-primary-100/70 pt-2 text-sm"
+              >{SITE.phone}</a
+            >
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="bg-primary-50 text-primary-600 dark:bg-primary-800 dark:text-primary-200 flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+            >
+              <Icon name="ph:envelope-simple" class="h-5 w-5" aria-hidden="true" />
+            </span>
+            <a
+              href={`mailto:${SITE.email}`}
+              class="text-ink/70 hover:text-primary-600 dark:text-primary-100/70 pt-2 text-sm"
+              >{SITE.email}</a
+            >
+          </li>
+        </ul>
+        <Button href="/kontak" class="w-fit">Formulir Kontak Lengkap</Button>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="overflow-hidden rounded-2xl border border-emerald-100 shadow-xl">
+          <iframe
+            src={SITE.mapsEmbedSrc}
+            class="h-[300px] w-full md:h-[400px] lg:h-[420px]"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"
+            style="border:0"
+            title="Lokasi Pondok Pesantren Roudhotuttholibin"></iframe>
+        </div>
+        <Button href={SITE.mapsLink} variant="outline" class="w-full justify-center sm:w-fit">
+          <Icon name="ph:arrow-square-out" class="h-4 w-4" aria-hidden="true" />
+          Buka di Google Maps
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

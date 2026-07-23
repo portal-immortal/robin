@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import TeacherCard from '@/components/TeacherCard.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { TEACHERS } from '@/utils/data';
+
+const teachers = TEACHERS;
+---
+
+<BaseLayout
+  title="Ustadz & Ustadzah"
+  description="Tenaga pendidik dan pembina Pondok Pesantren Roudhotuttholibin — berpengalaman dalam bidang tahfizh, diniyah, dan pendidikan formal."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Ustadz & Ustadzah' }]} />
+      <SectionTitle
+        eyebrow="Tenaga Pendidik"
+        title="Dibimbing Asatidz dan Asatidzah Berpengalaman"
+        description="Setiap santri dibina oleh tenaga pendidik yang kompeten di bidangnya masing-masing, mulai dari tahfizh, kajian kitab, hingga mata pelajaran formal."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page flex flex-col gap-12">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          teachers.map((t) => (
+            <TeacherCard name={t.name} role={t.role} subject={t.subject} image={t.image} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page">
+      <CallToAction
+        eyebrow="Bergabung Bersama Kami"
+        title="Menjadi Bagian dari Keluarga Besar Roudhotuttholibin"
+        description="Simak program pendidikan dan alur pendaftaran santri baru untuk tahun ajaran mendatang."
+        primaryLabel="Lihat Program Pendidikan"
+        primaryHref="/program"
+      />
+    </div>
+  </section>
+</BaseLayout>

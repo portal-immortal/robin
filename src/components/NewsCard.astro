@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import Card from './Card.astro';
+
+interface Props {
+  title: string;
+  excerpt: string;
+  date: string;
+  category: string;
+  href: string;
+  image: ImageMetadata;
+  class?: string;
+}
+
+const { title, excerpt, date, category, href, image, class: className = '' } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('id-ID', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<Card as="article" class={`overflow-hidden p-0! ${className}`}>
+  <a href={href} class="flex h-full flex-col">
+    <div class="bg-primary-50 dark:bg-primary-800 relative aspect-[16/10] w-full overflow-hidden">
+      <Image
+        src={image}
+        alt=""
+        width={480}
+        height={300}
+        class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+        loading="lazy"
+      />
+      <span
+        class="text-primary-700 absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold backdrop-blur"
+      >
+        {category}
+      </span>
+    </div>
+    <div class="flex flex-1 flex-col gap-2 p-5">
+      <p class="text-ink/50 dark:text-primary-100/50 flex items-center gap-1.5 text-xs font-medium">
+        <Icon name="ph:calendar-blank" class="h-3.5 w-3.5" aria-hidden="true" />
+        <time datetime={date}>{formattedDate}</time>
+      </p>
+      <h3 class="text-ink dark:text-primary-50 text-base leading-snug font-semibold">{title}</h3>
+      <p class="text-ink/70 dark:text-primary-100/70 line-clamp-2 text-sm leading-relaxed">
+        {excerpt}
+      </p>
+      <span
+        class="text-primary-600 dark:text-primary-300 mt-auto flex items-center gap-1 pt-2 text-sm font-semibold"
+      >
+        Baca selengkapnya
+        <Icon name="ph:arrow-right" class="h-4 w-4" aria-hidden="true" />
+      </span>
+    </div>
+  </a>
+</Card>

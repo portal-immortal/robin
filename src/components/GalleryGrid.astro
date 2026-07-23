@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+
+interface GalleryItem {
+  image: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  items: GalleryItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<div class={`grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 ${className}`}>
+  {
+    items.map((item, i) => (
+      <figure
+        class="group rounded-xl2 bg-primary-50 shadow-soft dark:bg-primary-800 relative aspect-square overflow-hidden"
+        data-lightbox-item
+        data-alt={item.alt}
+      >
+        <button
+          type="button"
+          class="absolute inset-0 flex h-full w-full items-center justify-center"
+          data-open-lightbox
+          aria-label={`Lihat ${item.alt}`}
+        >
+          <Image
+            src={item.image}
+            alt={item.alt}
+            width={400}
+            height={400}
+            loading={i < 4 ? 'eager' : 'lazy'}
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <span class="absolute inset-0 bg-black/20 transition-colors duration-300 group-hover:bg-black/35"></span>
+          <span class="bg-white/90 text-primary-700 absolute flex h-10 w-10 items-center justify-center rounded-full shadow-lg opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.15 10.15a7.5 7.5 0 006.5 6.5z" />
+            </svg>
+          </span>
+        </button>
+        {item.caption && (
+          <figcaption class="absolute inset-x-0 bottom-0 translate-y-full bg-linear-to-t from-black/70 to-transparent p-3 text-xs font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            {item.caption}
+          </figcaption>
+        )}
+      </figure>
+    ))
+  }
+</div>
+
+<div id="lightbox-overlay" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-4">
+  <button id="lightbox-close" type="button" class="text-white absolute top-4 right-4 rounded-full border border-white/40 p-2" aria-label="Tutup galeri">
+    ✕
+  </button>
+  <div class="relative max-h-[90vh] max-w-[90vw]">
+    <img id="lightbox-image" src="" alt="" class="max-h-[90vh] w-full rounded-2xl object-contain" />
+  </div>
+</div>
+
+<script is:inline data-astro-rerun>
+  (() => {
+  const overlay = document.getElementById('lightbox-overlay');
+  const image = document.getElementById('lightbox-image');
+  const closeButton = document.getElementById('lightbox-close');
+  const items = Array.from(document.querySelectorAll('[data-lightbox-item]'));
+
+  const openLightbox = (src, alt) => {
+    if (!overlay || !image) return;
+    image.src = src;
+    image.alt = alt;
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    document.body.classList.add('overflow-hidden');
+  };
+
+  const closeLightbox = () => {
+    if (!overlay) return;
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    document.body.classList.remove('overflow-hidden');
+  };
+
+  items.forEach((item) => {
+    const button = item.querySelector('[data-open-lightbox]');
+    if (!button) return;
+    button.addEventListener('click', () => {
+      const itemImage = item.querySelector('img');
+      if (itemImage) openLightbox(itemImage.getAttribute('src') || '', item.getAttribute('data-alt') || 'Galeri pesantren');
+    });
+  });
+
+  closeButton?.addEventListener('click', closeLightbox);
+  overlay?.addEventListener('click', (event) => {
+    if (event.target === overlay) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeLightbox();
+  });
+  })();
+</script>

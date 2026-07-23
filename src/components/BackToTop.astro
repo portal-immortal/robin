@@ -1,0 +1,33 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button
+  id="back-to-top"
+  type="button"
+  aria-label="Kembali ke atas halaman"
+  class="border-primary-100 text-primary-700 shadow-soft hover:bg-primary-50 dark:border-primary-800 dark:bg-primary-900 dark:text-primary-200 fixed bottom-6 left-6 z-40 flex h-11 w-11 -translate-y-4 items-center justify-center rounded-full border bg-white opacity-0 transition-all duration-300 sm:bottom-8 sm:left-8"
+>
+  <Icon name="ph:arrow-up-bold" class="h-5 w-5" aria-hidden="true" />
+</button>
+
+<script is:inline data-astro-rerun>
+  (() => {
+  const btn = document.getElementById('back-to-top');
+  if (btn) {
+    const toggle = () => {
+      const visible = window.scrollY > 480;
+      btn.classList.toggle('opacity-0', !visible);
+      btn.classList.toggle('translate-y-0', visible);
+      btn.classList.toggle('-translate-y-4', !visible);
+      btn.classList.toggle('pointer-events-none', !visible);
+    };
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  })();
+</script>

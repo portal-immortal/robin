@@ -1,0 +1,104 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import Card from '@/components/Card.astro';
+
+const missions = [
+  'Pendidikan Agama: Menyelenggarakan kajian kitab kuning secara komprehensif dan mendalam guna melahirkan santri yang tafaqquh fiddin (memahami ilmu agama dengan baik).',
+  'Pembangunan Karakter: Menanamkan nilai-nilai akhlaqul karimah dan adab islami dalam kehidupan sehari-hari.',
+  'Pemberdayaan Umat: Mempersiapkan santri agar mampu mengamalkan ilmu dan menjadi teladan (mursyidin) di tengah-tengah masyarakat, khususnya di wilayah Tangerang dan sekitarnya.',
+  'Pembiasaan Ibadah: Menciptakan lingkungan pesantren yang kondusif untuk memperbanyak ibadah, dzikir, dan pengamalan amaliah sehari-hari.',
+];
+
+const values = [
+  {
+    icon: 'ph:heart-fill',
+    title: 'Ikhlas',
+    description: 'Setiap amal dan pengabdian dilandasi niat karena Allah semata.',
+  },
+  {
+    icon: 'ph:shield-check-fill',
+    title: 'Amanah',
+    description: 'Menjaga kepercayaan wali santri dan masyarakat dengan tanggung jawab penuh.',
+  },
+  {
+    icon: 'ph:users-three-fill',
+    title: 'Ukhuwah',
+    description: 'Membangun persaudaraan yang erat antar santri, asatidz, dan wali santri.',
+  },
+  {
+    icon: 'ph:seal-check-fill',
+    title: 'Istiqamah',
+    description: 'Konsisten dalam kebaikan dan disiplin dalam menjalankan proses pendidikan.',
+  },
+];
+---
+
+<BaseLayout
+  title="Visi & Misi"
+  description="Visi dan Misi Pondok Pesantren Salafiyah Roudlotut Tholibin di Gintung, Sukadiri, Kabupaten Tangerang."
+>
+  <section class="section-pad">
+    <div class="container-page flex flex-col gap-10">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Visi & Misi' }]} />
+
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="text-ink/70 dark:text-primary-100/70 text-base leading-relaxed">
+          Visi dan Misi Pondok Pesantren Salafiyah Roudlotut Tholibin di Gintung, Sukadiri, Kabupaten Tangerang, disusun untuk mencetak santri yang berilmu (alim), beramal, dan berakhlakul karimah.
+        </p>
+        <span
+          class="text-secondary-600 dark:text-secondary-400 text-sm font-semibold tracking-widest uppercase"
+          >Visi</span
+        >
+        <h1 class="text-display-md sm:text-display-lg mt-3">
+          "Terwujudnya lembaga pendidikan Islam yang unggul dalam penguasaan ilmu agama (kitab kuning), berakhlaqul karimah, dan berpegang teguh pada ajaran Ahlussunnah wal Jama'ah."
+        </h1>
+      </div>
+
+      <div class="geo-divider my-6"></div>
+
+      <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
+        <SectionTitle eyebrow="Misi" title="Misi Pesantren" align="left" />
+        <ul class="flex flex-col gap-4">
+          {
+            missions.map((m) => (
+              <li class="rounded-xl2 border-primary-100 shadow-soft dark:border-primary-800 dark:bg-primary-900 flex items-start gap-3 border bg-white p-4">
+                <Icon
+                  name="ph:check-circle-fill"
+                  class="text-primary-600 dark:text-primary-300 mt-0.5 h-5 w-5 shrink-0"
+                  aria-hidden="true"
+                />
+                <span class="text-ink/80 dark:text-primary-100/80 text-sm leading-relaxed">
+                  {m}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad dark:bg-primary-900/40 bg-white">
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle eyebrow="Nilai-Nilai" title="Empat Pilar Utama Pendidikan" />
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          values.map((v) => (
+            <Card as="article" class="flex flex-col items-center gap-3 text-center">
+              <span class="bg-primary-50 text-primary-600 dark:bg-primary-800 dark:text-primary-200 flex h-12 w-12 items-center justify-center rounded-full">
+                <Icon name={v.icon} class="h-6 w-6" aria-hidden="true" />
+              </span>
+              <h3 class="text-ink dark:text-primary-50 text-base font-semibold">{v.title}</h3>
+              <p class="text-ink/70 dark:text-primary-100/70 text-sm leading-relaxed">
+                {v.description}
+              </p>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

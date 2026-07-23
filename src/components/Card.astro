@@ -1,0 +1,22 @@
+---
+// Generic rounded, soft-shadow card shell. Other card components
+// (FeatureCard, TeacherCard, etc.) compose this rather than
+// re-declaring the same border/shadow/radius rules.
+interface Props {
+  as?: 'div' | 'article' | 'li';
+  hoverable?: boolean;
+  class?: string;
+}
+
+const { as: Tag = 'div', hoverable = true, class: className = '' } = Astro.props;
+
+const hoverClasses = hoverable
+  ? 'transition-all duration-300 hover:-translate-y-1 hover:shadow-card'
+  : '';
+---
+
+<Tag
+  class={`w-full min-w-0 rounded-xl2 border border-primary-100 bg-white p-6 shadow-soft dark:border-primary-800 dark:bg-primary-900 ${hoverClasses} ${className}`}
+>
+  <slot />
+</Tag>

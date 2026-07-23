@@ -1,0 +1,53 @@
+---
+import { Icon } from 'astro-icon/components';
+import { SITE } from '@/utils/site';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    ...(item.href ? { item: `${SITE.url}${item.href}` } : {}),
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class={`text-sm ${className}`}>
+  <ol class="text-ink/60 dark:text-primary-100/60 flex flex-wrap items-center gap-2">
+    {
+      items.map((item, i) => (
+        <li class="flex items-center gap-2">
+          {i > 0 && <Icon name="ph:caret-right" class="h-3.5 w-3.5" aria-hidden="true" />}
+          {item.href && i !== items.length - 1 ? (
+            <a
+              href={item.href}
+              class="hover:text-primary-600 dark:hover:text-primary-300 transition-colors"
+            >
+              {item.label}
+            </a>
+          ) : (
+            <span aria-current="page" class="text-ink dark:text-primary-50 font-medium">
+              {item.label}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

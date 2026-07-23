@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import FeatureCard from '@/components/FeatureCard.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { PROGRAMS } from '@/utils/data';
+
+const jenjang = [
+  {
+    icon: 'ph:graduation-cap-fill',
+    title: 'MTs (setingkat SMP)',
+    description:
+      'Jenjang pendidikan formal 3 tahun berkurikulum nasional, terintegrasi penuh dengan kurikulum diniyah dan tahfizh.',
+  },
+  {
+    icon: 'ph:student-fill',
+    title: 'MA (setingkat SMA)',
+    description:
+      'Jenjang lanjutan 3 tahun yang mempersiapkan santri melanjutkan ke perguruan tinggi maupun mengabdi di masyarakat.',
+  },
+];
+---
+
+<BaseLayout
+  title="Program Pendidikan"
+  description="Kurikulum diniyah, tahfizh Al-Qur'an, dan pendidikan formal jenjang MTs & MA di Pondok Pesantren Roudhotuttholibin."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Program Pendidikan' }]} />
+      <SectionTitle
+        eyebrow="Program Pendidikan"
+        title="Kurikulum yang Membentuk Ilmu dan Akhlak Sekaligus"
+        description="Setiap santri dibina melalui tiga pilar kurikulum yang berjalan beriringan: diniyah, tahfizh, dan pendidikan formal — didukung pembinaan akhlak dan pengembangan bakat sehari-hari."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page flex flex-col gap-12">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          PROGRAMS.map((p) => (
+            <FeatureCard icon={p.icon} title={p.title} description={p.description} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="geo-divider"></div>
+
+  <section class="section-pad dark:bg-primary-900/40 bg-white">
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle eyebrow="Jenjang Formal" title="Dua Jenjang Pendidikan Formal Terintegrasi" />
+      <div class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
+        {
+          jenjang.map((j) => (
+            <FeatureCard icon={j.icon} title={j.title} description={j.description} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+

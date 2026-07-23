@@ -1,0 +1,29 @@
+---
+import { Icon } from 'astro-icon/components';
+import { SITE } from '@/utils/site';
+
+interface Props {
+  message?: string;
+}
+
+const {
+  message = 'Assalamu\u2019alaikum, saya ingin bertanya tentang Pondok Pesantren Roudhotuttholibin.',
+} = Astro.props;
+
+const href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Hubungi kami via WhatsApp"
+  class="group shadow-card fixed right-6 bottom-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white transition-transform duration-300 hover:scale-110 focus-visible:scale-110 sm:right-8 sm:bottom-8"
+>
+  <Icon name="mdi:whatsapp" class="h-7 w-7" aria-hidden="true" />
+  <span
+    class="bg-ink shadow-soft pointer-events-none absolute right-full mr-3 rounded-lg px-3 py-1.5 text-xs font-medium whitespace-nowrap text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+  >
+    Hubungi kami
+  </span>
+</a>

@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import NewsCard from '@/components/NewsCard.astro';
+
+const allNews = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout
+  title="Berita & Kegiatan"
+  description="Kabar, pengumuman, dan dokumentasi kegiatan terbaru dari Pondok Pesantren Roudhotuttholibin."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Berita' }]} />
+      <SectionTitle
+        eyebrow="Berita & Kegiatan"
+        title="Kabar dan Kegiatan Pesantren"
+        description="Ikuti perkembangan, pengumuman, dan agenda terbaru dari lingkungan Pondok Pesantren Roudhotuttholibin."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page">
+      {
+        allNews.length > 0 ? (
+          <div class="flex flex-wrap justify-center gap-6">
+            {allNews.map((post) => (
+              <NewsCard
+                title={post.data.title}
+                excerpt={post.data.excerpt}
+                date={post.data.date.toISOString()}
+                category={post.data.category}
+                image={post.data.image}
+                href={`/berita/${post.id}`}
+                class="w-full max-w-[360px]"
+              />
+            ))}
+          </div>
+        ) : (
+          <p class="text-ink/60 dark:text-primary-100/60 text-center">
+            Belum ada berita yang dipublikasikan.
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

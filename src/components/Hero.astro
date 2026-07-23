@@ -1,0 +1,70 @@
+﻿---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import Button from './Button.astro';
+
+interface Props {
+  image: ImageMetadata;
+}
+
+const { image } = Astro.props;
+---
+
+<section
+  class="bg-[radial-gradient(circle_at_top_left,_rgba(236,250,241,0.95),_rgba(248,250,249,0.65))] relative overflow-hidden"
+  aria-labelledby="hero-heading"
+>
+  <div class="bg-geo-pattern absolute inset-0 opacity-40" aria-hidden="true"></div>
+  <div class="bg-primary-100/70 absolute -top-24 right-0 h-96 w-96 rounded-full blur-3xl" aria-hidden="true"></div>
+  <div class="bg-secondary-100/65 absolute -bottom-24 left-0 h-96 w-96 rounded-full blur-3xl" aria-hidden="true"></div>
+
+  <div class="container-page relative grid min-h-[90vh] gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[45%_55%] lg:items-center lg:py-24">
+    <div class="flex flex-col justify-center gap-10 text-center sm:text-left">
+      <span class="inline-flex items-center gap-2 rounded-full border border-secondary-200 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-secondary-700 shadow-sm backdrop-blur">
+        Pondok Pesantren Salafiyah Roudlotut Tholibin
+      </span>
+
+      <p dir="rtl" lang="ar" class="font-arabic text-2xl leading-tight text-secondary-700">
+        روضة الطالبين
+      </p>
+
+      <div class="space-y-6 max-w-[620px]">
+<h1 id="hero-heading" class="text-[clamp(2.4rem,4vw,4.4rem)] leading-[1.08] font-semibold tracking-tight text-ink">
+        Menjaga Tradisi <span class="text-primary-700">Keilmuan Islam</span> dalam suasana pesantren yang tenang dan berakhlak.
+        </h1>
+
+        <p class="text-base leading-[1.8] text-ink/70 sm:text-lg">
+          Pondok Pesantren Salafiyah Roudlotut Tholibin berkomitmen melestarikan tradisi para ulama salaf melalui kajian kitab kuning, pembentukan karakter, dan amaliah sehari-hari.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+        <Button href="/tentang" size="lg" class="w-full justify-center sm:w-auto">Profil Pesantren</Button>
+        <Button href="/ppdb" variant="outline" size="lg" class="w-full justify-center sm:w-auto">Pendaftaran Santri</Button>
+      </div>
+
+      <div class="flex max-w-[620px] text-sm text-ink/70">
+        <span class="inline-flex items-center gap-2 rounded-full bg-primary-50 px-3 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-primary-700">
+          <Icon name="ph:seal-check-fill" class="h-4 w-4" aria-hidden="true" />
+          Pondok Pesantren Modern Tradisonal Salafiyyah
+        </span>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center">
+      <div class="w-full max-w-none overflow-hidden rounded-[32px] border border-primary-100/70 bg-white/90 shadow-soft sm:max-h-[520px] lg:max-h-[680px]">
+        <Image
+          src={image}
+          alt="Tampak depan bangunan Pondok Pesantren Roudlotut Tholibin"
+          width={1080}
+          height={720}
+          class="h-full w-full object-cover object-center"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          sizes="(max-width: 768px) 100vw, 55vw"
+        />
+      </div>
+    </div>
+  </div>
+</section>

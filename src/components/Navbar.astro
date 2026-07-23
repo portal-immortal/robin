@@ -1,0 +1,163 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { NAV_LINKS, SITE } from '@/utils/site';
+import logoImage from '@/assets/images/logo/logo-robin.png';
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50">
+  <!-- Scroll progress indicator -->
+  <div class="h-0.5 w-full bg-transparent">
+    <div
+      id="scroll-progress"
+      class="bg-gradient-emerald h-full w-0 transition-[width] duration-150"
+    >
+    </div>
+  </div>
+
+  <nav
+    aria-label="Navigasi utama"
+    class="border-primary-100/70 border-b bg-white/95 backdrop-blur-lg shadow-sm"
+  >
+    <div class="container-page flex h-[4.5rem] min-w-0 items-center justify-between gap-3 py-3">
+      <a href="/" class="flex min-w-0 items-center gap-3" aria-label={`${SITE.name} — Beranda`}>
+        <Image
+          src={logoImage}
+          alt={`${SITE.name} logo`}
+          width={48}
+          height={48}
+          class="h-11 w-11 shrink-0 rounded-full object-cover shadow-soft"
+          loading="eager"
+          decoding="async"
+        />
+        <span class="hidden flex-col leading-tight sm:flex">
+          <span class="text-ink text-sm font-bold">Roudhotuttholibin</span>
+          <span class="text-ink/50 text-[11px] font-medium"
+            >Pondok Pesantren</span
+          >
+        </span>
+      </a>
+
+      <!-- Desktop nav -->
+      <ul class="hidden items-center gap-1 xl:flex">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                class={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                  isActive(link.href)
+                    ? 'bg-primary-50 text-primary-700'
+                    : 'text-ink/70 hover:bg-primary-50 hover:text-primary-700'
+                }`}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="flex items-center">
+        <button
+          id="mobile-menu-button"
+          type="button"
+          class="text-ink/70 hover:bg-primary-50 flex h-11 w-11 items-center justify-center rounded-full xl:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Buka menu navigasi"
+        >
+          <Icon name="ph:list-bold" class="h-6 w-6" aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav -->
+    <div
+      id="mobile-menu"
+      class="border-primary-100 invisible max-h-0 overflow-hidden border-t opacity-0 transition-all duration-300 ease-out xl:hidden"
+      aria-hidden="true"
+    >
+      <ul class="container-page flex flex-col gap-1 py-4">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                class={`block rounded-lg px-4 py-2.5 text-sm font-medium ${
+                  isActive(link.href)
+                    ? 'bg-primary-50 text-primary-700'
+                    : 'text-ink/70 hover:bg-primary-50'
+                }`}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<script is:inline data-astro-rerun>
+  (() => {
+  const menuButton = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+
+  const setMenuState = (isOpen) => {
+    menu?.classList.toggle('max-h-96', isOpen);
+    menu?.classList.toggle('visible', isOpen);
+    menu?.classList.toggle('opacity-100', isOpen);
+    menu?.classList.toggle('invisible', !isOpen);
+    menu?.classList.toggle('opacity-0', !isOpen);
+    menu?.classList.toggle('max-h-0', !isOpen);
+    menu?.setAttribute('aria-hidden', String(!isOpen));
+    menuButton?.setAttribute('aria-expanded', String(isOpen));
+    menuButton?.setAttribute('aria-label', isOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+    document.body.classList.toggle('menu-open', isOpen);
+    document.documentElement.classList.toggle('menu-open', isOpen);
+  };
+
+  menuButton?.addEventListener('click', () => {
+    const isOpen = menuButton.getAttribute('aria-expanded') !== 'true';
+    setMenuState(isOpen);
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => setMenuState(false));
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1280) setMenuState(false);
+  });
+
+  // Close mobile menu on route change (View Transitions) so it never
+  // persists open across page navigations.
+  document.addEventListener('astro:before-swap', () => {
+    setMenuState(false);
+  });
+
+  // Scroll progress bar
+  const progress = document.getElementById('scroll-progress');
+  function updateProgress() {
+    if (!progress) return;
+    const scrollTop = window.scrollY;
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = height > 0 ? (scrollTop / height) * 100 : 0;
+    progress.style.width = `${pct}%`;
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  document.addEventListener('astro:page-load', updateProgress);
+  updateProgress();
+  })();
+</script>

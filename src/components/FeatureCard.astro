@@ -1,0 +1,27 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from './Card.astro';
+
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  href?: string;
+  class?: string;
+}
+
+const { icon, title, description, href, class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Card as="article" class={`group h-full ${className}`}>
+  <Tag href={href} class="flex h-full flex-col gap-4">
+    <div
+      class="bg-primary-50 text-primary-600 group-hover:bg-gradient-emerald dark:bg-primary-800 dark:text-primary-200 flex h-12 w-12 items-center justify-center rounded-xl transition-colors duration-300 group-hover:text-white"
+    >
+      <Icon name={icon} class="h-6 w-6" aria-hidden="true" />
+    </div>
+    <h3 class="text-ink dark:text-primary-50 text-lg font-semibold">{title}</h3>
+    <p class="text-ink/70 dark:text-primary-100/70 text-sm leading-relaxed">{description}</p>
+  </Tag>
+</Card>

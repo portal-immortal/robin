@@ -1,0 +1,57 @@
+---
+import Button from './Button.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+  class: className = '',
+} = Astro.props;
+---
+
+<div
+  class={`relative overflow-hidden rounded-xl3 bg-gradient-emerald px-6 py-14 text-center shadow-card sm:px-12 sm:py-20 ${className}`}
+>
+  <div class="bg-geo-pattern absolute inset-0 opacity-40" aria-hidden="true"></div>
+  <div class="relative mx-auto flex max-w-2xl flex-col items-center gap-5">
+    {
+      eyebrow && (
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-white uppercase backdrop-blur">
+          {eyebrow}
+        </span>
+      )
+    }
+    <h2 class="text-display-md sm:text-display-lg text-white">{title}</h2>
+    {description && <p class="text-base leading-relaxed text-white/85 sm:text-lg">{description}</p>}
+    <div class="mt-2 flex flex-wrap items-center justify-center gap-4">
+      <Button href={primaryHref} variant="secondary" size="lg">{primaryLabel}</Button>
+      {
+        secondaryLabel && secondaryHref && (
+          <Button
+            href={secondaryHref}
+            variant="ghost"
+            size="lg"
+            class="text-white! hover:bg-white/10!"
+          >
+            {secondaryLabel}
+          </Button>
+        )
+      }
+    </div>
+  </div>
+</div>

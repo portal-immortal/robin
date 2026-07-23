@@ -1,0 +1,46 @@
+{
+  "name": "robin",
+  "version": "1.0.0",
+  "description": "Website resmi Pondok Pesantren Roudhotuttholibin",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint . --ext .astro,.ts,.js",
+    "lint:fix": "eslint . --ext .astro,.ts,.js --fix",
+    "format": "prettier --write \"**/*.{astro,ts,js,json,md,css}\"",
+    "format:check": "prettier --check \"**/*.{astro,ts,js,json,md,css}\""
+  },
+  "dependencies": {
+    "astro": "^7.1.3",
+    "astro-compress": "^2.4.1",
+    "astro-icon": "^1.1.5",
+    "astro-seo": "^1.1.0",
+    "@astrojs/sitemap": "^3.7.3",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify-json/ph": "^1.2.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "tailwindcss": "^4.3.3",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "eslint-plugin-astro": "^3.0.1",
+    "globals": "^17.7.0",
+    "typescript-eslint": "^8.65.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

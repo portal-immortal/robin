@@ -1,0 +1,73 @@
+---
+interface Stat {
+  value: number;
+  suffix?: string;
+  label: string;
+}
+
+interface Props {
+  stats: readonly Stat[];
+  class?: string;
+}
+
+const { stats, class: className = '' } = Astro.props;
+---
+
+<div class={`grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4 ${className}`} data-stat-group>
+  {
+    stats.map((stat) => (
+      <div class="flex flex-col items-center gap-1 text-center">
+        <p class="text-display-md text-primary-700 dark:text-primary-200 flex items-baseline font-bold">
+          <span data-stat-value={stat.value}>0</span>
+          <span aria-hidden="true">{stat.suffix}</span>
+        </p>
+        <p class="text-ink/60 dark:text-primary-100/60 text-sm font-medium">{stat.label}</p>
+        <span class="sr-only">
+          {stat.value}
+          {stat.suffix} {stat.label}
+        </span>
+      </div>
+    ))
+  }
+</div>
+
+<script is:inline data-astro-rerun>
+  (() => {
+  // Minimal, dependency-free count-up animation. Only runs once per
+  // element, triggered when it scrolls into view, and is skipped
+  // entirely for users who prefer reduced motion.
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function animateValue(el, target) {
+    if (prefersReducedMotion) {
+      el.textContent = target.toLocaleString('id-ID');
+      return;
+    }
+    const duration = 1400;
+    const start = performance.now();
+
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target).toLocaleString('id-ID');
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const groups = document.querySelectorAll<HTMLElement>('[data-stat-group]');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const values = entry.target.querySelectorAll<HTMLElement>('[data-stat-value]');
+        values.forEach((el) => animateValue(el, Number(el.dataset.statValue)));
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.4 },
+  );
+
+  groups.forEach((group) => observer.observe(group));
+  })();
+</script>

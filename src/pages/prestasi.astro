@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import AchievementCard from '@/components/AchievementCard.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { ACHIEVEMENTS } from '@/utils/data';
+---
+
+<BaseLayout
+  title="Prestasi"
+  description="Torehan prestasi santri dan Pondok Pesantren Roudhotuttholibin di bidang akademik, keagamaan, seni, bahasa, dan olahraga."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Prestasi' }]} />
+      <SectionTitle
+        eyebrow="Prestasi"
+        title="Torehan Prestasi Santri & Pesantren"
+        description="Sebagian pencapaian santri di berbagai ajang, mulai dari tingkat kabupaten hingga nasional — buah dari pembinaan akademik, keagamaan, dan pengembangan bakat yang berkelanjutan."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page flex flex-col gap-12">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          ACHIEVEMENTS.map((a) => (
+            <AchievementCard title={a.title} level={a.level} year={a.year} category={a.category} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page">
+      <CallToAction
+        eyebrow="Kembangkan Bakat Anda"
+        title="Wujudkan Prestasi Bersama Roudhotuttholibin"
+        description="Pesantren menyediakan ruang pengembangan bakat melalui ekstrakurikuler, kompetisi, dan pembinaan intensif."
+        primaryLabel="Lihat Program Pendidikan"
+        primaryHref="/program"
+        secondaryLabel="Lihat Galeri"
+        secondaryHref="/galeri"
+      />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import Timeline from '@/components/Timeline.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { HISTORY } from '@/utils/data';
+import aboutHero from '@/assets/images/gallery/gallery-5.jpg';
+---
+
+<BaseLayout
+  title="Tentang Kami"
+  description="Sejarah, profil, dan perjalanan Pondok Pesantren Salafiyah Roudlotut Tholibin dalam menjaga tradisi keilmuan Islam sejak 1998."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Tentang Kami' }]} />
+      <SectionTitle
+        eyebrow="Profil Pesantren"
+        title="Mengenal Lebih Dekat Roudlotut Tholibin"
+        description="Perjalanan dalam menjaga tradisi keilmuan para ulama salaf melalui pembelajaran kitab kuning, pembinaan akhlak, dan pembiasaan ibadah."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div class="rounded-xl3 shadow-card overflow-hidden">
+        <Image
+          src={aboutHero}
+          alt="Suasana lingkungan Pondok Pesantren Roudhotuttholibin"
+          width={640}
+          height={480}
+          class="h-full w-full object-cover"
+          loading="eager"
+        />
+      </div>
+      <div class="flex flex-col gap-4">
+        <h2 class="text-display-md">Profil Singkat</h2>
+        <p class="text-ink/70 dark:text-primary-100/70 text-base leading-relaxed">
+          Pondok Pesantren Salafiyah Roudlotut Tholibin adalah lembaga pendidikan Islam yang
+          mengedepankan pembelajaran kitab kuning, pembentukan karakter islami, dan penguatan
+          amaliah sehari-hari. Berlokasi di Gintung, Kecamatan Sukadiri, Kabupaten Tangerang,
+          pesantren ini hadir sebagai tempat menimba ilmu agama secara mendalam dan membiasakan
+          santri untuk mengamalkannya dalam kehidupan.
+        </p>
+        <p class="text-ink/70 dark:text-primary-100/70 text-base leading-relaxed">
+          Dengan tetap menjaga nilai-nilai pesantren salaf, para santri dibimbing untuk memahami
+          ilmu agama secara benar, menanamkan adab, serta menjadi pribadi yang bermanfaat bagi
+          umat, khususnya di wilayah Tangerang dan sekitarnya.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="geo-divider"></div>
+
+  <section class="section-pad dark:bg-primary-900/40 bg-white">
+    <div class="container-page flex flex-col gap-12">
+      <SectionTitle eyebrow="Sejarah" title="Perjalanan Roudhotuttholibin dari Masa ke Masa" />
+      <Timeline items={HISTORY} class="mx-auto max-w-2xl" />
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-page grid gap-10 lg:grid-cols-3">
+      <div class="lg:col-span-1">
+        <SectionTitle eyebrow="Sambutan" title="Pesan Pengasuh Pesantren" align="left" />
+      </div>
+      <div
+        class="rounded-xl3 border-primary-100 shadow-soft dark:border-primary-800 dark:bg-primary-900 border bg-white p-8 lg:col-span-2"
+      >
+        <p class="text-ink/80 dark:text-primary-100/80 text-base leading-relaxed italic">
+          "Pendidikan yang sejati bukan hanya mengisi kepala dengan ilmu, tetapi juga menuntun hati
+          menuju akhlak yang mulia. Di Roudhotuttholibin, kami berikhtiar menghadirkan lingkungan
+          yang menumbuhkan keduanya sekaligus &mdash; agar santri kelak menjadi pribadi yang
+          berilmu, berakhlak, dan bermanfaat bagi umat."
+        </p>
+        <p class="text-ink dark:text-primary-50 mt-6 text-sm font-semibold">KH. Ahmad Fauzi</p>
+        <p class="text-ink/50 dark:text-primary-100/50 text-xs">
+          Pengasuh Pondok Pesantren Salafiyah Roudlotut Tholibin
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page">
+      <CallToAction
+        title="Tertarik Bergabung Bersama Kami?"
+        description="Simak visi misi, program pendidikan, dan alur pendaftaran santri baru selengkapnya."
+        primaryLabel="Lihat Visi & Misi"
+        primaryHref="/visi-misi"
+        secondaryLabel="Program Pendidikan"
+        secondaryHref="/program"
+      />
+    </div>
+  </section>
+</BaseLayout>

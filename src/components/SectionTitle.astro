@@ -1,0 +1,43 @@
+---
+// Consistent section heading used across every page: an eyebrow label,
+// a display headline, and an optional supporting description.
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+  as?: 'h1' | 'h2' | 'h3';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  align = 'center',
+  as: Tag = 'h2',
+  class: className = '',
+} = Astro.props;
+
+const alignClasses =
+  align === 'center' ? 'text-center items-center mx-auto' : 'text-left items-start';
+---
+
+<div class={`flex w-full max-w-2xl flex-col gap-4 ${alignClasses} ${className}`}>
+  {
+    eyebrow && (
+      <span class="border-secondary-300 bg-secondary-50 text-secondary-700 dark:border-secondary-700 dark:bg-primary-900 dark:text-secondary-300 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold tracking-widest uppercase">
+        <span class="bg-secondary-400 h-1.5 w-1.5 rotate-45" aria-hidden="true" />
+        {eyebrow}
+      </span>
+    )
+  }
+  <Tag class="text-[clamp(1.75rem,3.2vw,2.6rem)] font-semibold leading-tight">{title}</Tag>
+  {
+    description && (
+      <p class="text-ink/70 dark:text-primary-100/70 max-w-2xl text-base leading-relaxed sm:text-lg">
+        {description}
+      </p>
+    )
+  }
+</div>

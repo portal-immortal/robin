@@ -1,0 +1,87 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Button from '@/components/Button.astro';
+import { SITE } from '@/utils/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news');
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = post.data.date.toLocaleDateString('id-ID', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+});
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: post.data.title,
+  description: post.data.excerpt,
+  datePublished: post.data.date.toISOString(),
+  author: { '@type': 'Person', name: post.data.author },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+    logo: { '@type': 'ImageObject', url: `${SITE.url}/images/logo.png` },
+  },
+};
+---
+
+<BaseLayout title={post.data.title} description={post.data.excerpt} structuredData={articleJsonLd}>
+  <article class="section-pad">
+    <div class="container-page flex flex-col gap-8">
+      <Breadcrumb
+        items={[
+          { label: 'Beranda', href: '/' },
+          { label: 'Berita', href: '/berita' },
+          { label: post.data.title },
+        ]}
+      />
+
+      <header class="mx-auto flex max-w-3xl flex-col gap-4 text-center">
+        <span
+          class="border-secondary-300 bg-secondary-50 text-secondary-700 dark:border-secondary-700 dark:bg-primary-900 dark:text-secondary-300 mx-auto inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold tracking-widest uppercase"
+        >
+          {post.data.category}
+        </span>
+        <h1 class="text-display-md sm:text-display-lg">{post.data.title}</h1>
+        <p class="text-ink/50 dark:text-primary-100/50 text-sm font-medium">
+          {formattedDate} &middot; {post.data.author}
+        </p>
+      </header>
+
+      <div class="rounded-xl3 shadow-card mx-auto w-full max-w-4xl overflow-hidden">
+        <Image
+          src={post.data.image}
+          alt={post.data.title}
+          width={960}
+          height={540}
+          class="h-full w-full object-cover"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="prose-page mx-auto w-full max-w-3xl">
+        <Content />
+      </div>
+
+      <div
+        class="border-primary-100 dark:border-primary-800 mx-auto w-full max-w-3xl border-t pt-8"
+      >
+        <Button href="/berita" variant="outline"> &larr; Kembali ke Berita </Button>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

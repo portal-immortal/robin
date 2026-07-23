@@ -1,0 +1,57 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import GalleryGrid from '@/components/GalleryGrid.astro';
+import { GALLERY_CAPTIONS } from '@/utils/data';
+import galleryBangunan from '@/assets/images/gallery/bangunan-pesantren-02.jpg';
+import galleryKegiatan1 from '@/assets/images/gallery/kegiatan-santri-01.jpg';
+import galleryKegiatan2 from '@/assets/images/gallery/kegiatan-santri-02.jpg';
+import galleryKegiatan3 from '@/assets/images/gallery/kegiatan-santri-03.jpg';
+import galleryKegiatan4 from '@/assets/images/gallery/kegiatan-santri-04.jpg';
+import galleryKegiatan5 from '@/assets/images/gallery/kegiatan-santri-05.jpg';
+import galleryKegiatan6 from '@/assets/images/gallery/kegiatan-santri-06.jpg';
+import galleryKegiatan7 from '@/assets/images/gallery/kegiatan-santri-07.jpg';
+import galleryKegiatan8 from '@/assets/images/gallery/kegiatan-santri-08.jpg';
+import galleryMengajar1 from '@/assets/images/gallery/suasana-mengajar-02.jpg';
+import galleryMengajar2 from '@/assets/images/gallery/suasana-mengajar-01.jpg';
+import gallerySantri01 from '@/assets/images/gallery/suasana-santri-01.jpg';
+
+const galleryItems = [
+  { image: galleryBangunan, alt: 'Bangunan pesantren', caption: GALLERY_CAPTIONS[0] },
+  { image: galleryKegiatan1, alt: 'Kegiatan santri', caption: GALLERY_CAPTIONS[1] },
+  { image: galleryKegiatan2, alt: 'Kegiatan tahfizh', caption: GALLERY_CAPTIONS[2] },
+  { image: galleryKegiatan3, alt: 'Aktivitas santri', caption: GALLERY_CAPTIONS[3] },
+  { image: galleryKegiatan4, alt: 'Kegiatan pembelajaran', caption: GALLERY_CAPTIONS[4] },
+  { image: galleryKegiatan5, alt: 'Suasana belajar', caption: GALLERY_CAPTIONS[5] },
+  { image: galleryKegiatan6, alt: 'Kegiatan bersama', caption: GALLERY_CAPTIONS[6] },
+  { image: galleryKegiatan7, alt: 'Kegiatan keislaman', caption: GALLERY_CAPTIONS[7] },
+  { image: galleryKegiatan8, alt: 'Kegiatan santri', caption: GALLERY_CAPTIONS[8] },
+  { image: galleryMengajar1, alt: 'Suasana mengajar', caption: GALLERY_CAPTIONS[9] },
+  { image: galleryMengajar2, alt: 'Proses pembelajaran', caption: GALLERY_CAPTIONS[10] },
+  { image: gallerySantri01, alt: 'Masjid dan lingkungan pesantren', caption: GALLERY_CAPTIONS[11] },
+];
+---
+
+<BaseLayout
+  title="Galeri"
+  description="Dokumentasi kegiatan belajar, ibadah, dan keseharian santri di Pondok Pesantren Roudhotuttholibin."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Galeri' }]} />
+      <SectionTitle
+        eyebrow="Galeri"
+        title="Momen Kegiatan Santri"
+        description="Sekilas suasana belajar, beribadah, dan berkegiatan sehari-hari di lingkungan Pondok Pesantren Roudhotuttholibin."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page">
+      <GalleryGrid items={galleryItems} />
+    </div>
+  </section>
+</BaseLayout>

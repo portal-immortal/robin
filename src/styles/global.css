@@ -1,0 +1,265 @@
+/* ==========================================================================
+   Pondok Pesantren Roudhotuttholibin — Design System
+   Tailwind CSS v4 (CSS-first config). See https://tailwindcss.com/docs/theme
+   ========================================================================== */
+
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/* Class-based dark mode (v4 defaults to prefers-color-scheme, so we opt
+   back into the explicit `.dark` strategy driven by DarkModeToggle.astro). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* ---- Brand palette ---- */
+  --color-primary-50: #e8f5ec;
+  --color-primary-100: #cdead7;
+  --color-primary-200: #9bd5af;
+  --color-primary-300: #69c087;
+  --color-primary-400: #37ab5f;
+  --color-primary-500: #0f7a3d;
+  --color-primary: #0f7a3d;
+  --color-primary-600: #0c6532;
+  --color-primary-700: #0a5027;
+  --color-primary-800: #073a1c;
+  --color-primary-900: #052511;
+  --color-primary-950: #031a0b;
+
+  --color-secondary-50: #fbf6e7;
+  --color-secondary-100: #f5e9c3;
+  --color-secondary-200: #ebd387;
+  --color-secondary-300: #e1bd4b;
+  --color-secondary-400: #d4af37;
+  --color-secondary: #d4af37;
+  --color-secondary-500: #b08f26;
+  --color-secondary-600: #8c711e;
+  --color-secondary-700: #685315;
+  --color-secondary-800: #44360d;
+  --color-secondary-900: #201906;
+
+  --color-accent: #16a34a;
+  --color-surface: #f8faf9;
+  --color-ink: #1f2937;
+
+  /* ---- Typography ---- */
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  /* Restrained Arabic display accent — school name, Qur'anic touches only. */
+  --font-arabic: 'Reem Kufi', ui-sans-serif, sans-serif;
+
+  --text-display-xl: clamp(2.75rem, 5vw, 4.5rem);
+  --text-display-xl--line-height: 1.05;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display-xl--font-weight: 700;
+
+  --text-display-lg: clamp(2.25rem, 4vw, 3.5rem);
+  --text-display-lg--line-height: 1.08;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 700;
+
+  --text-display-md: clamp(1.75rem, 3vw, 2.5rem);
+  --text-display-md--line-height: 1.15;
+  --text-display-md--letter-spacing: -0.01em;
+  --text-display-md--font-weight: 600;
+
+  /* ---- Shadows ---- */
+  --shadow-soft: 0 2px 8px -2px rgba(15, 122, 61, 0.08), 0 8px 24px -8px rgba(15, 122, 61, 0.1);
+  --shadow-card: 0 1px 2px rgba(31, 41, 55, 0.04), 0 12px 32px -16px rgba(15, 122, 61, 0.18);
+  --shadow-gold: 0 8px 24px -8px rgba(212, 175, 55, 0.35);
+
+  /* ---- Background images ---- */
+  --background-image-gradient-emerald: linear-gradient(135deg, #0f7a3d 0%, #16a34a 100%);
+  --background-image-gradient-gold: linear-gradient(135deg, #d4af37 0%, #f5e9c3 100%);
+  --background-image-geo-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%230F7A3D' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M32 0L64 32L32 64L0 32Z'/%3E%3Ccircle cx='32' cy='32' r='16'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* ---- Radius ---- */
+  --radius-xl2: 1.25rem;
+  --radius-xl3: 1.75rem;
+
+  /* ---- Motion ---- */
+  --animate-fade-up: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+  --animate-float-slow: floatSlow 6s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes floatSlow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Custom `container` utility — v4 no longer accepts the v3 `container: {}`
+   config key, so it's redefined explicitly with the same responsive gutters. */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= theme(--breakpoint-sm)) {
+    padding-inline: 2rem;
+  }
+  @media (width >= theme(--breakpoint-lg)) {
+    padding-inline: 3rem;
+  }
+  @media (width >= theme(--breakpoint-xl)) {
+    padding-inline: 4rem;
+  }
+  @media (width >= theme(--breakpoint-2xl)) {
+    padding-inline: 5rem;
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-primary-100/60;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-surface text-ink dark:bg-primary-950 dark:text-primary-50 font-sans antialiased;
+    overflow-x: hidden;
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.05rem);
+    line-height: 1.7;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  iframe,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button,
+  [role='button'],
+  a {
+    min-height: 44px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  li {
+    overflow-wrap: anywhere;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  /* Respect users who've asked for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Visible, high-contrast focus ring for keyboard navigation (WCAG AA).
+     outline-hidden (not outline-none) so forced-colors/high-contrast mode
+     still renders a system outline even though the custom ring is hidden. */
+  :focus-visible {
+    @apply ring-secondary-400 ring-offset-surface dark:ring-offset-primary-950 ring-2 ring-offset-2 outline-hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink dark:text-primary-50 tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-secondary-200 text-primary-900;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply container mx-auto;
+  }
+
+  .section-pad {
+    @apply py-16 sm:py-20 lg:py-28;
+  }
+
+  /* Signature element: a slim geometric divider referencing the Islamic
+     eight-point star (rub el hizb) motif, used between major sections
+     instead of a plain <hr>. Pure CSS — zero JS, near-zero weight. */
+  .geo-divider {
+    @apply bg-primary-100 dark:bg-primary-800 relative h-px w-full overflow-visible;
+  }
+  .geo-divider::before {
+    content: '';
+    @apply border-secondary-400 bg-surface dark:bg-primary-950 absolute top-1/2 left-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border;
+  }
+
+  .prose-page {
+    @apply prose prose-slate prose-headings:font-display prose-headings:text-ink prose-a:text-primary-600 dark:prose-invert max-w-none;
+  }
+
+  .skip-link {
+    @apply focus:bg-primary-600 sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:px-4 focus:py-2 focus:text-white focus:shadow-lg;
+  }
+}

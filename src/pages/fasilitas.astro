@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import FeatureCard from '@/components/FeatureCard.astro';
+import CallToAction from '@/components/CallToAction.astro';
+import { FACILITIES } from '@/utils/data';
+
+import facilitiesHero from '@/assets/images/gallery/gallery-7.jpg';
+---
+
+<BaseLayout
+  title="Fasilitas"
+  description="Sarana dan prasarana Pondok Pesantren Roudhotuttholibin: asrama, masjid, perpustakaan, laboratorium, dan fasilitas penunjang lainnya."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Fasilitas' }]} />
+      <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+        <SectionTitle
+          eyebrow="Fasilitas"
+          title="Sarana Penunjang yang Nyaman dan Representatif"
+          description="Kami merancang setiap fasilitas untuk mendukung tiga kebutuhan utama santri: belajar, beribadah, dan menjalani keseharian yang sehat dan aman."
+          align="left"
+        />
+        <div class="rounded-xl3 shadow-card overflow-hidden">
+          <Image
+            src={facilitiesHero}
+            alt="Suasana fasilitas Pondok Pesantren Roudhotuttholibin"
+            width={640}
+            height={440}
+            class="h-full w-full object-cover"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page flex flex-col gap-12">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          FACILITIES.map((f) => (
+            <FeatureCard icon={f.icon} title={f.title} description={f.description} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page">
+      <CallToAction
+        eyebrow="Kunjungi Kami"
+        title="Ingin Melihat Langsung Fasilitas Pesantren?"
+        description="Wali santri dapat berkunjung langsung ke lokasi pesantren, atau menghubungi kami untuk jadwal kunjungan."
+        primaryLabel="Hubungi Kami"
+        primaryHref="/kontak"
+        secondaryLabel="Lihat Galeri"
+        secondaryHref="/galeri"
+      />
+    </div>
+  </section>
+</BaseLayout>

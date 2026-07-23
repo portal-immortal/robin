@@ -1,0 +1,39 @@
+---
+// Vertical timeline — used for the pesantren's history (a real chronological
+// sequence, which is the one case where a numbered/ordered device earns
+// its place per the content it presents).
+interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  items: readonly TimelineItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<ol
+  class={`relative flex flex-col gap-10 border-l-2 border-primary-100 pl-8 dark:border-primary-800 ${className}`}
+>
+  {
+    items.map((item) => (
+      <li class="relative">
+        <span
+          class="border-secondary-400 dark:bg-primary-950 absolute top-1 -left-[calc(2rem+7px)] flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 bg-white"
+          aria-hidden="true"
+        />
+        <span class="text-primary-600 dark:text-primary-300 text-sm font-bold tracking-wider uppercase">
+          {item.year}
+        </span>
+        <h3 class="text-ink dark:text-primary-50 mt-1 text-lg font-semibold">{item.title}</h3>
+        <p class="text-ink/70 dark:text-primary-100/70 mt-2 max-w-2xl text-sm leading-relaxed">
+          {item.description}
+        </p>
+      </li>
+    ))
+  }
+</ol>

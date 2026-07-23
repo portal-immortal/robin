@@ -1,0 +1,49 @@
+---
+// A brief loading veil for first paint only. Kept extremely light: no
+// spinner library, pure CSS animation, and it removes itself from the
+// DOM (not just hidden) once the page has painted so it can never block
+// interaction or accessibility tools.
+---
+
+<div
+  id="loading-screen"
+  class="bg-surface dark:bg-primary-950 fixed inset-0 z-[100] flex items-center justify-center transition-opacity duration-500"
+  aria-hidden="true"
+>
+  <div class="flex flex-col items-center gap-4">
+    <svg viewBox="0 0 64 64" class="text-primary-600 h-12 w-12 animate-spin" aria-hidden="true">
+      <circle
+        cx="32"
+        cy="32"
+        r="26"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="4"
+        stroke-opacity="0.15"></circle>
+      <path
+        d="M32 6 A26 26 0 0 1 58 32"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="4"
+        stroke-linecap="round"></path>
+    </svg>
+    <span class="text-primary-700 dark:text-primary-200 text-sm font-medium">Memuat…</span>
+  </div>
+</div>
+
+<script>
+  const screen = document.getElementById('loading-screen');
+  if (screen) {
+    const remove = () => {
+      screen.classList.add('opacity-0');
+      setTimeout(() => screen.remove(), 400);
+    };
+    if (document.readyState === 'complete') {
+      remove();
+    } else {
+      window.addEventListener('load', remove, { once: true });
+    }
+    // Safety net: never let it linger for more than a second.
+    setTimeout(remove, 1000);
+  }
+</script>

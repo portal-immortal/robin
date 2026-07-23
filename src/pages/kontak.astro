@@ -1,0 +1,195 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import Button from '@/components/Button.astro';
+import { SITE } from '@/utils/site';
+
+const waHref = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
+  'Assalamu\u2019alaikum, saya ingin bertanya tentang Pondok Pesantren Roudhotuttholibin.',
+)}`;
+
+const contactPoints = [
+  { icon: 'ph:map-pin', label: 'Alamat', value: SITE.address, href: undefined },
+  {
+    icon: 'ph:phone',
+    label: 'Telepon',
+    value: SITE.phone,
+    href: `tel:${SITE.phone.replace(/\s|-/g, '')}`,
+  },
+  { icon: 'ph:envelope-simple', label: 'Email', value: SITE.email, href: `mailto:${SITE.email}` },
+];
+---
+
+<BaseLayout
+  title="Kontak"
+  description="Hubungi Pondok Pesantren Roudhotuttholibin melalui WhatsApp, telepon, email, atau kunjungi langsung lokasi kami."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Kontak' }]} />
+      <SectionTitle
+        eyebrow="Kontak Kami"
+        title="Kami Siap Membantu Anda"
+        description="Untuk pertanyaan seputar PPDB, program pendidikan, atau kunjungan, silakan hubungi kami melalui salah satu kanal berikut."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page grid gap-12 lg:grid-cols-2 lg:items-start">
+      <div class="flex flex-col gap-8">
+        <div
+          class="rounded-xl3 border-primary-100 bg-gradient-emerald shadow-card dark:border-primary-800 border p-6 text-white"
+        >
+          <div class="flex items-center gap-3">
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-full bg-white/15"
+              aria-hidden="true"
+            >
+              <Icon name="ph:whatsapp-logo-fill" class="h-6 w-6" />
+            </span>
+            <p class="text-sm font-semibold">Respons Tercepat</p>
+          </div>
+          <p class="mt-3 text-sm leading-relaxed text-white/85">
+            Untuk pertanyaan yang membutuhkan jawaban cepat, hubungi kami langsung melalui WhatsApp.
+          </p>
+          <Button href={waHref} variant="secondary" class="mt-5 text-white! hover:bg-white/10!">
+            Chat via WhatsApp
+          </Button>
+        </div>
+
+        <ul class="flex flex-col gap-4">
+          {
+            contactPoints.map((point) => (
+              <li class="flex items-start gap-3">
+                <span class="bg-primary-50 text-primary-600 dark:bg-primary-800 dark:text-primary-200 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                  <Icon name={point.icon} class="h-5 w-5" aria-hidden="true" />
+                </span>
+                <div class="pt-1.5">
+                  <p class="text-ink/50 dark:text-primary-100/50 text-xs font-semibold tracking-wide uppercase">
+                    {point.label}
+                  </p>
+                  {point.href ? (
+                    <a
+                      href={point.href}
+                      class="text-ink/80 hover:text-primary-600 dark:text-primary-100/80 dark:hover:text-primary-300 text-sm"
+                    >
+                      {point.value}
+                    </a>
+                  ) : (
+                    <p class="text-ink/80 dark:text-primary-100/80 text-sm">{point.value}</p>
+                  )}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="flex flex-col gap-3">
+          <div class="overflow-hidden rounded-2xl border border-emerald-100 shadow-xl">
+            <iframe
+              src={SITE.mapsEmbedSrc}
+              class="h-[300px] w-full md:h-[400px]"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="strict-origin-when-cross-origin"
+              style="border:0"
+              title="Lokasi Pondok Pesantren Roudhotuttholibin"></iframe>
+          </div>
+          <Button href={SITE.mapsLink} variant="outline" class="w-full justify-center sm:w-fit">
+            <Icon name="ph:arrow-square-out" class="h-4 w-4" aria-hidden="true" />
+            Buka di Google Maps
+          </Button>
+        </div>
+      </div>
+
+      <div
+        class="rounded-xl3 border-primary-100 shadow-soft dark:border-primary-800 dark:bg-primary-900 border bg-white p-6 sm:p-8"
+      >
+        <h2 class="text-ink dark:text-primary-50 text-lg font-semibold">Kirim Pesan</h2>
+        <p class="text-ink/60 dark:text-primary-100/60 mt-1 text-sm">
+          Isi formulir berikut dan pesan akan terbuka melalui aplikasi email Anda.
+        </p>
+
+        <form id="contact-form" class="mt-6 flex flex-col gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="name" class="text-ink dark:text-primary-100 text-sm font-medium"
+              >Nama Lengkap</label
+            >
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              class="border-primary-200 bg-surface text-ink focus-visible:border-primary-400 dark:border-primary-700 dark:bg-primary-950 dark:text-primary-50 w-full rounded-xl border px-4 py-3 text-base outline-hidden sm:text-sm"
+            />
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="email" class="text-ink dark:text-primary-100 text-sm font-medium"
+              >Email</label
+            >
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              class="border-primary-200 bg-surface text-ink focus-visible:border-primary-400 dark:border-primary-700 dark:bg-primary-950 dark:text-primary-50 w-full rounded-xl border px-4 py-3 text-base outline-hidden sm:text-sm"
+            />
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="subject" class="text-ink dark:text-primary-100 text-sm font-medium"
+              >Subjek</label
+            >
+            <input
+              id="subject"
+              name="subject"
+              type="text"
+              required
+              class="border-primary-200 bg-surface text-ink focus-visible:border-primary-400 dark:border-primary-700 dark:bg-primary-950 dark:text-primary-50 w-full rounded-xl border px-4 py-3 text-base outline-hidden sm:text-sm"
+            />
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <label for="message" class="text-ink dark:text-primary-100 text-sm font-medium"
+              >Pesan</label
+            >
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              class="border-primary-200 bg-surface text-ink focus-visible:border-primary-400 dark:border-primary-700 dark:bg-primary-950 dark:text-primary-50 min-h-[128px] w-full rounded-xl border px-4 py-3 text-base outline-hidden sm:text-sm"
+            ></textarea>
+          </div>
+          <Button type="submit" class="mt-2 w-full justify-center">Kirim Pesan</Button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ email: SITE.email }} is:inline data-astro-rerun>
+  (() => {
+  // This is a static site with no backend, so the form can't submit
+  // silently to a server. As an honest, zero-dependency fallback it opens
+  // the visitor's email client with the fields pre-filled. Before launch,
+  // consider swapping this for a form backend (e.g. Formspree, Web3Forms,
+  // or a small serverless function) for a smoother in-page submission.
+  const form = document.getElementById('contact-form');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const name = data.get('name');
+    const subject = data.get('subject');
+    const message = data.get('message');
+    const senderEmail = data.get('email');
+
+    const body = `Dari: ${name} (${senderEmail})\n\n${message}`;
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(String(subject))}&body=${encodeURIComponent(body)}`;
+  });
+  })();
+</script>

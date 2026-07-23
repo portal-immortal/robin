@@ -1,0 +1,30 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="Ganti tampilan terang/gelap"
+  aria-pressed="false"
+  class="text-ink/70 hover:bg-primary-50 hover:text-primary-700 dark:text-primary-100/70 dark:hover:bg-primary-800 dark:hover:text-primary-50 flex h-10 w-10 items-center justify-center rounded-full transition-colors"
+>
+  <Icon name="ph:sun-bold" class="h-5 w-5 dark:hidden" aria-hidden="true" />
+  <Icon name="ph:moon-bold" class="hidden h-5 w-5 dark:block" aria-hidden="true" />
+</button>
+
+<script is:inline data-astro-rerun>
+  (() => {
+  const toggle = document.getElementById('theme-toggle');
+
+  function setTheme(dark) {
+    document.documentElement.classList.toggle('dark', dark);
+    localStorage.setItem('robin-theme', dark ? 'dark' : 'light');
+    toggle?.setAttribute('aria-pressed', String(dark));
+  }
+
+  toggle?.addEventListener('click', () => {
+    setTheme(!document.documentElement.classList.contains('dark'));
+  });
+  })();
+</script>

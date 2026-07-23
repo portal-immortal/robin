@@ -1,0 +1,37 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from './Card.astro';
+
+interface Props {
+  title: string;
+  level: string;
+  year: string;
+  category?: string;
+  class?: string;
+}
+
+const { title, level, year, category = 'Prestasi', class: className = '' } = Astro.props;
+---
+
+<Card as="article" class={`flex h-full flex-col gap-4 ${className}`}>
+  <div class="flex items-start justify-between gap-3">
+    <div
+      class="bg-secondary-50 text-secondary-600 dark:bg-primary-800 dark:text-secondary-300 flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+    >
+      <Icon name="ph:trophy-fill" class="h-5 w-5" aria-hidden="true" />
+    </div>
+    <span
+      class="bg-primary-50 text-primary-700 dark:bg-primary-800 dark:text-primary-200 rounded-full px-3 py-1 text-xs font-semibold"
+    >
+      {year}
+    </span>
+  </div>
+  <div class="flex flex-1 flex-col gap-1.5">
+    <span
+      class="text-secondary-600 dark:text-secondary-400 text-xs font-semibold tracking-wide uppercase"
+      >{category}</span
+    >
+    <h3 class="text-ink dark:text-primary-50 text-base leading-snug font-semibold">{title}</h3>
+    <p class="text-ink/60 dark:text-primary-100/60 text-sm">{level}</p>
+  </div>
+</Card>

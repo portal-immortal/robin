@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { SITE, FOOTER_LINKS } from '@/utils/site';
+import logoImage from '@/assets/images/logo/logo-robin.png';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-primary-100 dark:border-primary-800 dark:bg-primary-950 border-t bg-white">
+  <div class="container-page grid gap-8 py-16 sm:py-20 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-12">
+    <div class="flex flex-col items-center gap-4 text-center md:items-start md:text-left">
+      <a href="/" class="flex items-center gap-3" aria-label={`${SITE.name} — Beranda`}>
+        <Image
+          src={logoImage}
+          alt={`${SITE.name} logo`}
+          width={48}
+          height={48}
+          class="h-11 w-11 shrink-0 rounded-full object-cover shadow-soft"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="flex flex-col leading-tight">
+          <span class="text-ink dark:text-primary-50 text-sm font-bold">Roudhotuttholibin</span>
+          <span class="text-ink/50 dark:text-primary-100/50 text-[11px] font-medium"
+            >Pondok Pesantren</span
+          >
+        </span>
+      </a>
+      <p class="text-ink/60 dark:text-primary-100/60 max-w-sm text-sm leading-relaxed">
+        {SITE.description}
+      </p>
+      <div class="flex items-center justify-center gap-3 pt-2 md:justify-start">
+        {
+          [
+            { icon: 'mdi:instagram', href: SITE.socials.instagram, label: 'Instagram' },
+            { icon: 'mdi:facebook', href: SITE.socials.facebook, label: 'Facebook' },
+            { icon: 'mdi:youtube', href: SITE.socials.youtube, label: 'YouTube' },
+          ].map((social) => (
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              class="bg-primary-50 text-primary-700 hover:bg-gradient-emerald dark:bg-primary-900 dark:text-primary-200 flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:text-white"
+            >
+              <Icon name={social.icon} class="h-4 w-4" aria-hidden="true" />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <nav aria-label="Tautan Pesantren" class="text-center md:text-left">
+      <h3 class="text-ink dark:text-primary-50 mb-4 text-sm font-semibold tracking-wide uppercase">
+        Pesantren
+      </h3>
+      <ul class="flex flex-col gap-3">
+        {
+          FOOTER_LINKS.pesantren.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-ink/60 hover:text-primary-600 dark:text-primary-100/60 dark:hover:text-primary-300 text-sm transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav aria-label="Tautan Informasi" class="text-center md:text-left">
+      <h3 class="text-ink dark:text-primary-50 mb-4 text-sm font-semibold tracking-wide uppercase">
+        Informasi
+      </h3>
+      <ul class="flex flex-col gap-3">
+        {
+          FOOTER_LINKS.informasi.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-ink/60 hover:text-primary-600 dark:text-primary-100/60 dark:hover:text-primary-300 text-sm transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+        {
+          FOOTER_LINKS.lainnya.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-ink/60 hover:text-primary-600 dark:text-primary-100/60 dark:hover:text-primary-300 text-sm transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="text-center md:text-left">
+      <h3 class="text-ink dark:text-primary-50 mb-4 text-sm font-semibold tracking-wide uppercase">
+        Kontak
+      </h3>
+      <ul class="text-ink/60 dark:text-primary-100/60 flex flex-col items-center gap-3 text-sm md:items-start">
+        <li class="flex items-start gap-2.5">
+          <Icon
+            name="ph:map-pin"
+            class="text-primary-600 dark:text-primary-300 mt-0.5 h-4 w-4 shrink-0"
+            aria-hidden="true"
+          />
+          <span>{SITE.address}</span>
+        </li>
+        <li class="flex items-center gap-2.5">
+          <Icon
+            name="ph:phone"
+            class="text-primary-600 dark:text-primary-300 h-4 w-4 shrink-0"
+            aria-hidden="true"
+          />
+          <a
+            href={`tel:${SITE.phone.replace(/\s|-/g, '')}`}
+            class="hover:text-primary-600 dark:hover:text-primary-300">{SITE.phone}</a
+          >
+        </li>
+        <li class="flex items-center gap-2.5">
+          <Icon
+            name="ph:envelope-simple"
+            class="text-primary-600 dark:text-primary-300 h-4 w-4 shrink-0"
+            aria-hidden="true"
+          />
+          <a
+            href={`mailto:${SITE.email}`}
+            class="hover:text-primary-600 dark:hover:text-primary-300">{SITE.email}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="geo-divider"></div>
+
+  <div
+    class="container-page text-ink/50 dark:text-primary-100/50 flex flex-col items-center justify-between gap-3 py-6 text-center text-xs sm:flex-row sm:text-left"
+  >
+    <p>&copy; {year} {SITE.name}. Seluruh hak cipta dilindungi.</p>
+    <p>Dibangun dengan &#9825; untuk generasi Qur&rsquo;ani.</p>
+  </div>
+</footer>

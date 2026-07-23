@@ -1,0 +1,172 @@
+---
+import { SEO } from 'astro-seo';
+import { ClientRouter } from 'astro:transitions';
+import Navbar from '@/components/Navbar.astro';
+import Footer from '@/components/Footer.astro';
+import FloatingWhatsApp from '@/components/FloatingWhatsApp.astro';
+import BackToTop from '@/components/BackToTop.astro';
+import LoadingScreen from '@/components/LoadingScreen.astro';
+import { SITE } from '@/utils/site';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  structuredData?: Record<string, unknown>;
+  /** Off by default: an SSG site paints fast enough that a loading veil
+   *  usually costs more perceived speed than it gives. Available for
+   *  pages that fetch something client-side before they're ready. */
+  showLoadingScreen?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = '/images/og-cover.jpg',
+  noindex = false,
+  structuredData,
+  showLoadingScreen = false,
+} = Astro.props;
+
+const pageTitle = title === SITE.name ? title : `${title} | ${SITE.name}`;
+const canonicalURL = new URL(Astro.url.pathname, SITE.url).toString();
+const ogImageURL = new URL(image, SITE.url).toString();
+
+// Organization structured data included on every page; pages can supply
+// additional/overriding structured data (Article, BreadcrumbList, etc.)
+// via the `structuredData` prop, rendered separately.
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: SITE.name,
+  url: SITE.url,
+  logo: `${SITE.url}/images/logo.png`,
+  description: SITE.description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address,
+    addressCountry: 'ID',
+  },
+  telephone: SITE.phone,
+  email: SITE.email,
+  sameAs: [SITE.socials.instagram, SITE.socials.facebook, SITE.socials.youtube],
+};
+---
+
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0F7A3D" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.png" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Prevent theme flash: applied before first paint -->
+    <script is:inline>
+      (function () {
+        function isDarkTheme() {
+          const stored = localStorage.getItem('robin-theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          return stored === 'dark' || (!stored && prefersDark);
+        }
+
+        function applyTheme(documentElement) {
+          documentElement.classList.toggle('dark', isDarkTheme());
+        }
+
+        applyTheme(document.documentElement);
+        document.addEventListener('astro:before-swap', (event) => {
+          applyTheme(event.newDocument.documentElement);
+        });
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Reem+Kufi:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <SEO
+      title={pageTitle}
+      description={description}
+      canonical={canonicalURL}
+      noindex={noindex}
+      openGraph={{
+        basic: {
+          title: pageTitle,
+          type: 'website',
+          image: ogImageURL,
+          url: canonicalURL,
+        },
+        optional: {
+          description,
+          siteName: SITE.name,
+          locale: 'id_ID',
+        },
+        image: {
+          alt: `${SITE.name} — Cover`,
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: pageTitle,
+        description,
+        image: ogImageURL,
+      }}
+      extend={{
+        link: [{ rel: 'sitemap', href: '/sitemap-index.xml' }],
+        meta: [
+          { name: 'author', content: SITE.name },
+          { name: 'format-detection', content: 'telephone=no' },
+        ],
+      }}
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} is:inline />
+    {
+      structuredData && (
+        <script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
+      )
+    }
+
+    <ClientRouter />
+  </head>
+  <body>
+    {showLoadingScreen && <LoadingScreen />}
+
+    <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
+
+    <Navbar />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <FloatingWhatsApp />
+    <BackToTop />
+
+    <style is:global>
+      /* View Transitions: a quiet cross-fade, never a jarring slide */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.25s;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+          animation: none;
+        }
+      }
+    </style>
+  </body>
+</html>

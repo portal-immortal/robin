@@ -1,0 +1,152 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import SectionTitle from '@/components/SectionTitle.astro';
+import Card from '@/components/Card.astro';
+import Button from '@/components/Button.astro';
+import { DONATION_CHANNELS } from '@/utils/data';
+import { SITE } from '@/utils/site';
+
+const usage = [
+  {
+    icon: 'ph:graduation-cap-fill',
+    title: 'Beasiswa Santri Dhuafa',
+    description:
+      'Membantu biaya pendidikan santri yatim dan kurang mampu agar tetap bisa menimba ilmu.',
+  },
+  {
+    icon: 'ph:hammer-fill',
+    title: 'Pembangunan Fasilitas',
+    description: 'Mendukung pembangunan dan renovasi asrama, masjid, serta ruang belajar.',
+  },
+  {
+    icon: 'ph:book-open-text-fill',
+    title: 'Operasional Pendidikan',
+    description:
+      'Menunjang kegiatan belajar-mengajar, kitab, dan sarana tahfizh Al-Qur\u2019an sehari-hari.',
+  },
+];
+
+const waHref = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
+  'Assalamu\u2019alaikum, saya sudah melakukan donasi untuk Pondok Pesantren Roudhotuttholibin dan ingin melakukan konfirmasi.',
+)}`;
+---
+
+<BaseLayout
+  title="Donasi & Wakaf"
+  description="Salurkan donasi dan wakaf terbaik Anda untuk mendukung pendidikan santri dhuafa dan pembangunan fasilitas Pondok Pesantren Roudhotuttholibin."
+>
+  <section class="section-pad pb-10!">
+    <div class="container-page flex flex-col gap-6">
+      <Breadcrumb items={[{ label: 'Beranda', href: '/' }, { label: 'Donasi & Wakaf' }]} />
+      <SectionTitle
+        eyebrow="Donasi & Wakaf"
+        title="Bersama Membangun Generasi Qur'ani"
+        description="Setiap donasi yang disalurkan turut membantu santri dhuafa menimba ilmu dan mendukung pembangunan fasilitas pesantren yang lebih baik."
+        align="left"
+      />
+    </div>
+  </section>
+
+  <section class="section-pad pt-0!">
+    <div class="container-page flex flex-col gap-12">
+      <div class="grid gap-6 sm:grid-cols-3">
+        {
+          usage.map((u) => (
+            <Card as="article" class="flex flex-col items-center gap-3 text-center">
+              <span class="bg-primary-50 text-primary-600 dark:bg-primary-800 dark:text-primary-200 flex h-12 w-12 items-center justify-center rounded-full">
+                <Icon name={u.icon} class="h-6 w-6" aria-hidden="true" />
+              </span>
+              <h3 class="text-ink dark:text-primary-50 text-base font-semibold">{u.title}</h3>
+              <p class="text-ink/70 dark:text-primary-100/70 text-sm leading-relaxed">
+                {u.description}
+              </p>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="geo-divider"></div>
+
+  <section class="section-pad dark:bg-primary-900/40 bg-white">
+    <div class="container-page flex flex-col gap-10">
+      <SectionTitle eyebrow="Rekening Donasi" title="Salurkan Donasi Melalui Rekening Berikut" />
+
+      <div class="mx-auto grid w-full max-w-3xl gap-6 sm:grid-cols-2">
+        {
+          DONATION_CHANNELS.map((ch) => (
+            <Card as="article" class="flex flex-col gap-4">
+              <div class="flex items-center gap-3">
+                <span
+                  class="bg-gradient-gold text-primary-900 flex h-11 w-11 items-center justify-center rounded-full"
+                  aria-hidden="true"
+                >
+                  <Icon name="ph:bank-fill" class="h-5 w-5" />
+                </span>
+                <p class="text-ink dark:text-primary-50 text-sm font-semibold">{ch.bank}</p>
+              </div>
+              <div>
+                <p
+                  class="text-primary-700 dark:text-primary-200 text-2xl font-bold tracking-wide"
+                  data-account-number
+                >
+                  {ch.account}
+                </p>
+                <p class="text-ink/50 dark:text-primary-100/50 text-xs">a.n. {ch.holder}</p>
+              </div>
+              <button
+                type="button"
+                data-copy-button
+                data-copy-value={ch.account}
+                class="border-primary-200 text-primary-700 hover:bg-primary-50 dark:border-primary-700 dark:text-primary-200 dark:hover:bg-primary-800 inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition-colors"
+              >
+                <Icon name="ph:copy-simple" class="h-4 w-4" aria-hidden="true" />
+                <span data-copy-label>Salin Nomor Rekening</span>
+              </button>
+            </Card>
+          ))
+        }
+      </div>
+
+      <div class="mx-auto flex flex-col items-center gap-4 text-center">
+        <p class="text-ink/60 dark:text-primary-100/60 max-w-md text-sm">
+          Setelah melakukan transfer, mohon konfirmasi donasi Anda melalui WhatsApp agar dapat kami
+          catat dan tindak lanjuti.
+        </p>
+        <Button href={waHref} size="lg">
+          <Icon name="ph:whatsapp-logo-fill" class="h-4 w-4" aria-hidden="true" />
+          Konfirmasi Donasi
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline data-astro-rerun>
+  (() => {
+  // Minimal, self-contained copy-to-clipboard for donation account numbers.
+  // No framework, no external service — just the Clipboard API with a
+  // graceful no-op fallback for browsers/contexts where it's unavailable.
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-button]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const value = button.dataset.copyValue;
+      const label = button.querySelector<HTMLSpanElement>('[data-copy-label]');
+      if (!value || !label || !navigator.clipboard) return;
+
+      try {
+        await navigator.clipboard.writeText(value);
+        const original = label.textContent;
+        label.textContent = 'Tersalin!';
+        setTimeout(() => {
+          label.textContent = original;
+        }, 2000);
+      } catch {
+        // Clipboard permissions denied — the number is still visible to copy manually.
+      }
+    });
+  });
+  })();
+</script>
