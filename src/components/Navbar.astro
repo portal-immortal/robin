@@ -46,14 +46,14 @@ function isActive(href: string) {
       </a>
 
       <!-- Desktop nav -->
-      <ul class="hidden items-center gap-1 xl:flex">
+      <ul class="hidden items-center gap-0.5 lg:flex">
         {
           NAV_LINKS.map((link) => (
             <li>
               <a
                 href={link.href}
                 aria-current={isActive(link.href) ? 'page' : undefined}
-                class={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                class={`rounded-full px-2.5 py-2 text-[13px] font-medium transition-colors lg:px-3 xl:px-3.5 xl:text-sm ${
                   isActive(link.href)
                     ? 'bg-primary-50 text-primary-700'
                     : 'text-ink/70 hover:bg-primary-50 hover:text-primary-700'
@@ -70,7 +70,7 @@ function isActive(href: string) {
         <button
           id="mobile-menu-button"
           type="button"
-          class="text-ink/70 hover:bg-primary-50 flex h-11 w-11 items-center justify-center rounded-full xl:hidden"
+          class="text-ink/70 hover:bg-primary-50 flex h-11 w-11 items-center justify-center rounded-full lg:hidden"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Buka menu navigasi"
@@ -83,7 +83,7 @@ function isActive(href: string) {
     <!-- Mobile nav -->
     <div
       id="mobile-menu"
-      class="border-primary-100 invisible max-h-0 overflow-hidden border-t opacity-0 transition-all duration-300 ease-out xl:hidden"
+      class="border-primary-100 invisible max-h-0 overflow-hidden border-t opacity-0 transition-all duration-300 ease-out lg:hidden"
       aria-hidden="true"
     >
       <ul class="container-page flex flex-col gap-1 py-4">
@@ -138,7 +138,7 @@ function isActive(href: string) {
   });
 
   window.addEventListener('resize', () => {
-    if (window.innerWidth >= 1280) setMenuState(false);
+    if (window.innerWidth >= 1024) setMenuState(false);
   });
 
   // Close mobile menu on route change (View Transitions) so it never
