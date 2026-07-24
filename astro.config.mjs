@@ -31,16 +31,16 @@ export default defineConfig({
     }),
     // astro-compress must run last so it can minify the final output
     compress({
-      CSS: true,
-      HTML: {
-        'html-minifier-terser': {
-          removeComments: true,
-        },
-      },
-      Image: false, // images are already optimized via the Astro Image/Sharp pipeline
-      JavaScript: true,
-      SVG: true,
-    }),
+  CSS: false,
+  HTML: {
+    'html-minifier-terser': {
+      removeComments: true,
+    },
+  },
+  Image: false,
+  JavaScript: true,
+  SVG: true,
+}),
   ],
 
   image: {
