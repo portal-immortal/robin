@@ -7,7 +7,7 @@ image: '../../assets/images/news/news-1.jpg'
 author: 'Humas Pesantren'
 ---
 
-Pondok Pesantren Roudhotuttholibin resmi meluncurkan website pada Kamis, 23 Juli 2026 bertepatan dengan Milad hari jadi Pondok Pesantren. Kehadiran website ini menjadi langkah baru dalam memperluas akses informasi dan mempererat hubungan pesantren dengan santri, wali santri, calon santri, serta masyarakat.
+Pondok Pesantren Roudhotuttholibin resmi meluncurkan website pada Kamis, 23 Juli 2026 bertepatan dengan Milad kedelapan hari jadi Pondok Pesantren. Kehadiran website ini menjadi langkah baru dalam memperluas akses informasi dan mempererat hubungan pesantren dengan santri, wali santri, calon santri, serta masyarakat.
 
 ## Pusat Informasi Pesantren
 
