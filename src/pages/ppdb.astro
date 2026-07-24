@@ -8,10 +8,9 @@ import Button from '@/components/Button.astro';
 import { PPDB_STEPS, PPDB_REQUIREMENTS, FAQ_PPDB } from '@/utils/data';
 import { SITE } from '@/utils/site';
 
-// TODO before launch: point this at the panitia's live registration form
-// (Google Form / SIM PPDB) — kept as a clearly-marked placeholder since
-// this is a static site with no backend to process submissions directly.
-const REGISTRATION_FORM_URL = 'https://forms.gle/ppdb-roudhotuttholibin-placeholder';
+const REGISTRATION_FORM_URL = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
+  'Assalamu\u2019alaikum, saya ingin mendaftar PPDB Pondok Pesantren Roudhotuttholibin.',
+)}`;
 
 const waHref = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
   'Assalamu\u2019alaikum, saya ingin bertanya tentang PPDB Pondok Pesantren Roudhotuttholibin.',
