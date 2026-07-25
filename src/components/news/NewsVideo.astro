@@ -1,0 +1,25 @@
+---
+export interface Props {
+  src: string;
+  poster?: string;
+}
+
+const { src, poster } = Astro.props;
+---
+
+<div class="my-10">
+  <h3 class="mb-5 text-xl font-bold text-slate-800">
+    Video Dokumentasi
+  </h3>
+
+  <video
+    class="w-full rounded-xl shadow-xl"
+    controls
+    preload="metadata"
+    playsinline
+    poster={poster}
+  >
+    <source src={src} type="video/mp4" />
+    Browser Anda tidak mendukung video.
+  </video>
+</div>

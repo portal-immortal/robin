@@ -4,6 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import compress from 'astro-compress';
 import icon from 'astro-icon';
 
+import mdx from '@astrojs/mdx';
+
 // https://astro.build/config
 //
 // Deployment target: GitHub Pages with a custom domain (robin.ponpes.id)
@@ -18,30 +20,28 @@ export default defineConfig({
   compressHTML: true,
 
   integrations: [
-    icon({
-      include: {
-        mdi: ['*'],
-        ph: ['*'],
-      },
-    }),
-    sitemap({
-      changefreq: 'weekly',
-      priority: 0.7,
-      lastmod: new Date(),
-    }),
-    // astro-compress must run last so it can minify the final output
-    compress({
-  CSS: false,
-  HTML: {
-    'html-minifier-terser': {
-      removeComments: true,
+  icon({
+    include: {
+      mdi: ['*'],
+      ph: ['*'],
     },
+  }), 
+  sitemap({
+    changefreq: 'weekly',
+    priority: 0.7,
+    lastmod: new Date(),
+  }), // astro-compress must run last so it can minify the final output
+  compress({
+CSS: false,
+HTML: {
+  'html-minifier-terser': {
+    removeComments: true,
   },
-  Image: false,
-  JavaScript: true,
-  SVG: true,
-}),
-  ],
+},
+Image: false,
+JavaScript: true,
+SVG: true,
+}), mdx()],
 
   image: {
     service: {
