@@ -256,7 +256,7 @@
   }
 
   .prose-page {
-    @apply prose prose-slate prose-headings:font-display prose-headings:text-ink prose-a:text-primary-600 dark:prose-invert max-w-none;
+    @apply prose prose-slate prose-headings:font-display prose-headings:text-ink dark:prose-headings:text-primary-50 prose-a:text-primary-600 dark:prose-invert max-w-none;
   }
 
   .skip-link {
